@@ -8,8 +8,14 @@ class JobBoard extends Component {
 
 	render() {
 		return (
-			<div className="jobBoard">
-            <p>This is a board</p>
+			<div className="jobBoard">            
+				<div>
+					<ul>
+						<li>
+							<button className="plain-button">This is a board</button>
+						</li>
+					</ul>
+				</div>
                 <div className="board">                
                     <JobColumn />
                     <JobColumn />
