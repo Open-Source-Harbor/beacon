@@ -9,15 +9,26 @@ function App() {
   // const state = uuid.v4();
   // const scope = "r_liteprofile%20r_emailaddress";
 
-  const oauth = () => {
-    fetch('/login')
-  };
+  // const oauth = () => {
+  //   console.log('App.js oauth function hit')
+  //   fetch('/auth/linkedin')
+  //   .then(res => {
+  //     console.log({res});
+  //     // console.log('=====> res.json: ', res.json());
+  //     return res.json()
+  //   })
+  //   .then(res => {
+  //     if (res) console.log({res});
+  //   })
+  //   .catch(err => console.log({err}))
+  // };
 
   return (
     <div className="App">
       <p>Hello World</p>
+      <a href="/auth/linkedin" className="btn btn-default">LinkedIn</a>
       {/* <a href={`${baseURI}?response_type=code&client_id=${clientID}&redirect_uri=${redirectURI}&state=${state}&scope=${scope}`}> */}
-        <button onClick={oauth}>Click for OAuth</button>
+        {/* <button onClick={oauth}>Click for OAuth</button> */}
         {/* </a> */}
     </div>
   );
