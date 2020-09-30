@@ -21,21 +21,25 @@ class Modal extends Component {
 				<div className="inputBoxes">
                     <form>
                         <div>
-                            <span>Job URL: </span>
+                            <span>Job URL </span>
                             <input type="url"/>
                         </div>
                         <div>
-                        <span>Salary: </span>
+                        <span>Salary </span>
                             <input type="text"/>
                         </div>
                         <div>
-                        <span>Notes: </span>
+                        <span>Notes </span>
                             <input type="text"/>
                         </div>
                     </form>
                     <div className="toDoList">
-                        To Do
+                        <span>To Do </span>
                         <ToDo />
+                    </div>
+                    <div>
+                        <span>Interviews </span>
+                        
                     </div>
                     
 				</div>
