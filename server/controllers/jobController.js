@@ -28,13 +28,43 @@ jobController.getJobs = async (req, res, next) => {
   try {
 
     const user = res.locals.user;
-    
+    const board1 = user.boards[0];
+    const archivedIDs = user.archived;
 
-    models.Job.find({}, (err, result) => {
-      res.locals.jobs = result;
-      console.log('all jobs ',result)
-      return next();
-    })
+
+    const interestedIn = await Promise.all(await board1.interestedIn.map(async (jobId) => {
+      console.log('this is the id in the map ', jobId);
+      const job = await models.Job.findOne({ _id: jobId });
+      console.log('we got it??', job);
+      return job;
+    }))
+
+    const appliedFor = await Promise.all(await board1.appliedFor.map(async (jobId) => {
+      return await models.Job.findOne({ _id: jobId });
+    }))
+
+    const upcomingInterviews = await Promise.all(await board1.upcomingInterviews.map(async (jobId) => {
+      return await models.Job.findOne({ _id: jobId });
+    }))
+    const offers = await Promise.all(await board1.offers.map(async (jobId) => {
+      return await models.Job.findOne({ _id: jobId });
+    }))
+    const archived = await Promise.all(await archivedIDs.map(async (jobId) => {
+      return await models.Job.findOne({ _id: jobId });
+    }))
+
+    const board = {
+      interestedIn,
+      appliedFor,
+      upcomingInterviews,
+      offers,
+      archived
+    }
+
+    console.log('entire board!!', board);
+
+    res.locals.jobs = board;
+    return next();
 
   } catch (err) {
     return next({

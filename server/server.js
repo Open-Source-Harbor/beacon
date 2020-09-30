@@ -30,25 +30,39 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
+// Creates a job for a specific user, and automatically puts in interestedIn column
+// INPUT => 
+// {
+//   "newJob": {
+//     ...
+//   },
+//   "userId": "..."
+// }
 app.post('/createJob',
 jobController.createJob,
 (req, res) => {
   return res.status(200).json(res.locals.job)
 })
 
+// Fetches all jobs for one user
+// INPUT => "userId"
 app.post('/getJobs',
-// jobController.getDummyUser,
+userController.getDummyUser,
 jobController.getJobs,
 (req, res) => {
   return res.status(200).json(res.locals.jobs)
 })
 
+// Creates a user
+// INPUT is whatever fields from the User Model that you want to input
 app.post('/createUser',
 userController.createDummyUser,
 (req, res) => {
   return res.status(200).json(res.locals.user)
 })
 
+// fetches all info on user
+// INPUT => "userId"
 app.post('/getUser', 
 userController.getDummyUser,
 (req, res) => {

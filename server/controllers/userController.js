@@ -66,9 +66,9 @@ userController.createDummyUser = async (req, res, next) => {
 
 userController.getDummyUser = async (req, res, next) => {
   try {
-    const { name } = req.body;
+    const { userId } = req.body;
 
-    const user = await User.findOne({ name });
+    const user = await User.findOne({ _id: userId });
 
     res.locals.user = user;
 
