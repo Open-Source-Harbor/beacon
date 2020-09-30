@@ -1,9 +1,15 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+
+# CLIENT_ID
+src/containers/Secret.js
+
+# project
+.idea/
+*.iml
 
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+node_modules/
 
 # testing
 /coverage
@@ -21,3 +27,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Environment Variables
+.env
+
+# Google App Engine
+google-app-engine-client-secret.json
+app.yaml
+
+.history
