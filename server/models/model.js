@@ -14,7 +14,13 @@ mongoose.connect(MONGO_URI, {
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  username: { type: String, required: true },
+  username: String,
+  email: String,
+  name: String,
+  // jobs: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'job'
+  // }]
   boards: [{
     name: { type: String, default: "Board1" },
     interestedIn: [{
@@ -48,6 +54,8 @@ const jobSchema = new Schema({
   company: String,
   location: String,
   url: String,
+  column: String,
+  // columnIndex: Number,
   // logo: String, ??
   // salary: Number, ??
   notes: String,

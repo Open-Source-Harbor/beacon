@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Modal from './Modal';
+// import Modal from './Modal';
 import JobFeed from './JobFeed';
 import JobBoard from './JobBoard';
-import ArchiveBoard from './ArchiveBoard'
+// import ArchiveBoard from './ArchiveBoard';
 
 
 class MainPage extends Component {
