@@ -1,3 +1,4 @@
+const { models } = require("mongoose");
 const { User } = require("../models/model");
 const userController = {};
 
@@ -44,6 +45,42 @@ userController.createUser = async (req, res, next) => {
     });
   }
 };
+
+userController.createDummyUser = async (req, res, next) => {
+  try {
+    const dummy = req.body;
+
+    await User.create(dummy, (err, dumUser) => {
+      console.log('dummy ', dumUser);
+      res.locals.user = dumUser;
+      return next();
+    })
+
+  } catch (err) {
+    return next({
+      log: `An error occurred while creating dummy user: ${err}`,
+      message: { err: "An error occurred in userController.createDummyUser. Check server for more details" },
+    });
+  }
+}
+
+userController.getDummyUser = async (req, res, next) => {
+  try {
+    const { name } = req.body;
+
+    const user = await User.findOne({ name });
+
+    res.locals.user = user;
+
+    return next();
+
+  } catch (err) {
+    return next({
+      log: `An error occurred while fetching dummy user: ${err}`,
+      message: { err: "An error occurred in userController.getDummyUser. Check server for more details" },
+    });
+  }
+}
 
 
 module.exports = userController;

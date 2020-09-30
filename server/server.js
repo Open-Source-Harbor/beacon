@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const userController = require("./controllers/userController.js");
 const loginController = require("./controllers/loginController.js");
 const cookieController = require("./controllers/cookieController.js");
+const jobController = require("./controllers/jobController.js");
 const { User } = require("./models/model");
 const passport = require('passport');
 const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
@@ -26,8 +27,38 @@ const state = uuid.v4().replace(/-/g, '').slice(0, 17);
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.static("public"));
 
+app.post('/createJob',
+jobController.createJob,
+(req, res) => {
+  return res.status(200).json(res.locals.job)
+})
+
+app.post('/getJobs',
+jobController.getAllJobs,
+(req, res) => {
+  return res.status(200).json(res.locals.jobs)
+})
+
+app.post('/createDummyUser',
+userController.createDummyUser,
+(req, res) => {
+  return res.status(200).json(res.locals.user)
+})
+
+app.post('/getDummyUser', 
+userController.getDummyUser,
+(req, res) => {
+  return res.status(200).json(res.locals.user);
+})
+
+app.post('/moveDummyJob',
+jobController.moveJob,
+(req, res) => {
+  return res.status(200).json({ user: res.locals.user, job: res.locals.job })
+})
 
 // extra from jsonworld
 app.use(session({ 
@@ -80,6 +111,7 @@ app.use("/logout", function (req, res) {
   req.logout();
   return res.redirect("/");
 });
+
 
 app.use("/", (req, res) =>
   res.status(200).sendFile(path.resolve(__dirname, "../public/index.html"))
