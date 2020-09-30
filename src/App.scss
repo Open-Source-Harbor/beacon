@@ -34,7 +34,7 @@
   // background-color: white;
   min-height: 70vh;
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   font-size: calc(10px + 2vmin);
   color: black;
   .mainBoard {
@@ -50,6 +50,16 @@
       background-color: white;
       margin: 10px;
       min-width: 70vw;
+      .ul {
+        list-style-type: none;
+      }
+      .plain-button {
+        border: none;
+        padding: 0;
+        margin: 0;
+        background-color: inherit;
+        font-size: calc(10px + 2vmin);
+      }
       .board {
         display: flex;
         flex-direction: row;
@@ -58,6 +68,9 @@
           margin: 10px;
           min-width: 18vw; 
           min-height: 60vh;
+          .jobColumnElem {
+            background-color: purple;
+          }
         }
       }
     }
