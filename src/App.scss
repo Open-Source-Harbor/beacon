@@ -1,0 +1,89 @@
+.App {
+  text-align: center;
+}
+
+/* @media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+} */
+
+.header {
+  background-color: #282c34;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.mainContainer {
+  background-color: #ebeef3;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
+}
+
+.mainPage {
+  // background-color: white;
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
+  .mainBoard {
+    // background-color: white;
+    display: flex;
+    flex-direction: row;
+    .jobFeed {
+      background-color: white;
+      margin: 10px;
+      min-width: 20vw;
+    }
+    .jobBoard {
+      background-color: white;
+      margin: 10px;
+      min-width: 70vw;
+      .board {
+        display: flex;
+        flex-direction: row;
+        .jobColumn {
+          background-color: aqua;
+          margin: 10px;
+          min-width: 18vw; 
+          min-height: 60vh;
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  background-color: #282c34;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+/* .App-link {
+  color: #61dafb;
+} */
+
+/* @keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
