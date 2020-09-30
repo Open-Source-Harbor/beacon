@@ -24,9 +24,11 @@ const jobController = {};
 //     });
 //   }
 // }
-
-jobController.getAllJobs = async (req, res, next) => {
+jobController.getJobs = async (req, res, next) => {
   try {
+
+    const user = res.locals.user;
+    
 
     models.Job.find({}, (err, result) => {
       res.locals.jobs = result;
@@ -41,6 +43,23 @@ jobController.getAllJobs = async (req, res, next) => {
     });
   }
 }
+
+// jobController.getAllJobs = async (req, res, next) => {
+//   try {
+
+//     models.Job.find({}, (err, result) => {
+//       res.locals.jobs = result;
+//       console.log('all jobs ',result)
+//       return next();
+//     })
+
+//   } catch (err) {
+//     return next({
+//       log: `An error occurred while fetching jobs: ${err}`,
+//       message: { err: "An error occurred in jobController.getAllJob. Check server for more details" },
+//     });
+//   }
+// }
 
 // createJob needs these inputs:
 // {
@@ -112,7 +131,7 @@ jobController.moveToArchived = async (req, res, next) => {
     }
 
     //// logic to move from column to archived...
-    
+
 
   } catch (err) {
     return next({

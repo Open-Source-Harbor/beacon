@@ -37,75 +37,76 @@ jobController.createJob,
 })
 
 app.post('/getJobs',
-jobController.getAllJobs,
+// jobController.getDummyUser,
+jobController.getJobs,
 (req, res) => {
   return res.status(200).json(res.locals.jobs)
 })
 
-app.post('/createDummyUser',
+app.post('/createUser',
 userController.createDummyUser,
 (req, res) => {
   return res.status(200).json(res.locals.user)
 })
 
-app.post('/getDummyUser', 
+app.post('/getUser', 
 userController.getDummyUser,
 (req, res) => {
   return res.status(200).json(res.locals.user);
 })
 
-app.post('/moveDummyJob',
+app.post('/moveJob',
 jobController.moveJob,
 (req, res) => {
   return res.status(200).json({ user: res.locals.user, job: res.locals.job })
 })
 
 // extra from jsonworld
-app.use(session({ 
-  secret: uuid.v4().slice(0,5),
-  resave: true,
-  saveUninitialized: true
-}))
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(session({ 
+//   secret: uuid.v4().slice(0,5),
+//   resave: true,
+//   saveUninitialized: true
+// }))
+// app.use(passport.initialize());
+// app.use(passport.session());
 
-passport.serializeUser(function (user, done) {
-  done(null, user);
-});
+// passport.serializeUser(function (user, done) {
+//   done(null, user);
+// });
 
 // extra from jsonworld
-passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
-});
+// passport.deserializeUser(function (id, done) {
+//   User.findById(id, function (err, user) {
+//     done(err, user);
+//   });
+// });
 
-passport.use(new LinkedInStrategy ({
-  clientID: clientID,
-  clientSecret: clientSecret,
-  callbackURL: callbackURL,
-  scope: ['r_emailaddress', 'r_liteprofile'],
-  state: true,
-  passReqToCallback: true
-}, (req, accessToken, refreshToken, profile, done) => {
-  req.session.accessToken = accessToken; // Access token is now saved in req.session.accesstoken variable
-  process.nextTick(() => done(null, profile));
-}));
+// passport.use(new LinkedInStrategy ({
+//   clientID: clientID,
+//   clientSecret: clientSecret,
+//   callbackURL: callbackURL,
+//   scope: ['r_emailaddress', 'r_liteprofile'],
+//   state: true,
+//   passReqToCallback: true
+// }, (req, accessToken, refreshToken, profile, done) => {
+//   req.session.accessToken = accessToken; // Access token is now saved in req.session.accesstoken variable
+//   process.nextTick(() => done(null, profile));
+// }));
 
-app.use((req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "*");
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.end();
-});
+// app.use((req, res) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader("Access-Control-Allow-Methods", "*");
+//   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   res.end();
+// });
 
-app.use('/auth/linkedin', passport.authenticate('linkedin', (req, res) => {
-  // Request will be redirected to LinkedIn for authentication, so function will not be called
-  console.log('Request redirected');
-}));
+// app.use('/auth/linkedin', passport.authenticate('linkedin', (req, res) => {
+//   // Request will be redirected to LinkedIn for authentication, so function will not be called
+//   console.log('Request redirected');
+// }));
 
-app.use('/auth/linkedin/callback', passport.authenticate('linkedin', { failureRedirect: '/' }), 
-(req, res) => res.redirect('/'))
+// app.use('/auth/linkedin/callback', passport.authenticate('linkedin', { failureRedirect: '/' }), 
+// (req, res) => res.redirect('/'))
 
 app.use("/logout", function (req, res) {
   req.logout();
