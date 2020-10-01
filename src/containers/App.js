@@ -8,7 +8,7 @@ import CLIENT_ID from './Secret.js';
 const baseURI = "https://www.linkedin.com/oauth/v2/authorization";
 // const CLIENT_SECRET = "8pufmbYSk8WPXaog";
 // const CLIENT_ID = "860exmlhesujye";
-const redirectURI = "http://localhost:3000/callback";
+const redirectURI = "http://localhost:8080/api/linkedin";
 // const redirectURI = "http://192.168.0.28:3000";
 const state = '46S7DJD0a9b';
 const scope = "r_liteprofile%20r_emailaddress";
@@ -21,7 +21,7 @@ function App() {
     <div className="App">
       <Header />
       <p>Hello World</p>
-      <a href="/login" >
+      <a href={authorizationURI} >
         LinkedIn
       </a>
       <Main />

@@ -10,8 +10,8 @@ userController.verifyUser = async (req, res, next) => {
     const oauthResponse = req.body;
     console.log('oauth response in verify user', oauthResponse);
 
-    await User.find(oauthResponse, (user, error) => {
-      if (error) return next('error in finding user in verify user', error)
+    await User.find(oauthResponse, (err, user) => {
+      if (err) return next('err in finding user in verify user', error)
       if (!user) {
         console.log('no user found');
         return next();
@@ -30,11 +30,10 @@ userController.verifyUser = async (req, res, next) => {
 
 userController.createUser = async (req, res, next) => {
   try {
-    if (res.locals.user) return next();
-
-    const newUser = req.body;
-    await User.create(newUser).then((newUser) => {
-      res.locals.user = newUser;
+    if (!res.locals.user || !res.locals.user.l_id) return next();
+    const query = { 'l_id': res.locals.user.l_id }
+    await User.findOneAndUpdate(query, res.locals.user, {upsert: true}, (err, doc) => {
+      if (err) return res.send(500, {error: `error occured in userController.createUser: ${err}`});
       return next();
     });
   } catch (err) {
