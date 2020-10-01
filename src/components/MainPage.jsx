@@ -6,24 +6,24 @@ import Chatroom from "./Chatroom";
 // import ArchiveBoard from './ArchiveBoard';
 
 
-class MainPage extends Component {
-	constructor(props) {
-        super(props);
+function MainPage(props) {
+	// constructor(props) {
+    //     super(props);
     //     this.state = {
     //         modal: false;
     //     }
-    }
+    // }
     // if (this.state.modal) {
 
     // }
 
 
-    render () {
+    // render () {
         return (
     <div className="mainPage">
         <div className="mainBoard">
             <JobFeed />
-            <JobBoard newJobAdded={this.props.newJobAdded}/>
+            <JobBoard newJobAdded={props.newJobAdded}/>
         </div>
         {/* <div className="showArchive">
             <ArchiveBoard />
@@ -33,7 +33,7 @@ class MainPage extends Component {
             </div>
           </div>
         ); 
-      }
+    //   }
 }
 
 

@@ -6,13 +6,13 @@ import MainPage from '../components/MainPage.jsx'
 import MainPageGreeting from '../components/MainPageGreeting.jsx';
 
 
-function Main() {
+function Main(props) {
   return (
     <div className="mainContainer">
       <Switch>
         <Route path="/main">
             <MainPageGreeting />
-            <MainPage />
+            <MainPage newJobAdded={props.newJobAdded}/>
         </Route>
         <Route exact path="/">
             <HomePage />

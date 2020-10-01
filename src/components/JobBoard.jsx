@@ -15,24 +15,28 @@ const itemsFromBackend = [
 const columnsFromBackend = {
   [uuidv4()]: {
     name: 'Interested',
+    dbName: 'interestedIn',
     items: itemsFromBackend,
   },
   [uuidv4()]: {
     name: 'Applied',
+    dbName: 'appliedFor',
     items: [],
   },
   [uuidv4()]: {
     name: 'Interviews',
+    dbName: 'upcomingInterviews',
     items: [],
   },
   [uuidv4()]: {
     name: 'Offers',
+    dbName: 'offers',
     items: [],
   },
 };
 
 // function to update columns after dragging job post
-const onDragEnd = (result, columns, setColumns) => {
+const onDragEnd = async (result, columns, setColumns) => {
   if (!result.destination) return;
   const { source, destination } = result;
   console.log('source', source);
@@ -58,6 +62,14 @@ const onDragEnd = (result, columns, setColumns) => {
       },
     });
 
+    console.log('HEY removed: ', removed)
+    console.log('HEY sourceColumn', sourceColumn);
+    console.log('source.droppableId', source.droppableId);
+    console.log('destination col', destColumn);
+    console.log('destination...', destination.droppableId);
+
+    console.log('indices', destination.index, source.index)
+
     // beginning skeleton for posting changes to server after drag event. NEEDS WORK
     async function fetchData() {
       const moved = {
@@ -65,20 +77,21 @@ const onDragEnd = (result, columns, setColumns) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: '5f75e7b2d3a398548e7addf1',
-          // jobId: ,
-          // prevCol: ,
-          // prevIndex: ,
-          // newCol: ,
-          // newIndex: ,
-          // boardIndex: ,
+          jobId: removed._id,
+          prevCol: sourceColumn.dbName,
+          prevIndex: source.index,
+          newCol: destColumn.dbName,
+          newIndex: destination.index,
+          boardIndex: 0,
         }),
       };
-      const res = await fetch('http://localhost:8080/moveJob', moved);
+      const res = await fetch('http://localhost:8080/api/moveJob', moved);
       res
         .json()
-        .then((res) => console.log(res))
+        .then((res) => console.log('front end response line 87', res))
         .catch((err) => console.log(err));
     }
+    await fetchData();
   } else {
     const column = columns[source.droppableId];
     const copiedItems = [...column.items];
@@ -91,6 +104,27 @@ const onDragEnd = (result, columns, setColumns) => {
         items: copiedItems,
       },
     });
+    async function moveIndex() {
+      const moved = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: '5f75e7b2d3a398548e7addf1',
+          jobId: removed._id,
+          prevCol: column.dbName,
+          prevIndex: source.index,
+          newCol: column.dbName,
+          newIndex: destination.index,
+          boardIndex: 0,
+        }),
+      };
+      const res = await fetch('http://localhost:8080/api/moveJob', moved);
+      res
+        .json()
+        .then((res) => console.log('front end response line 87', res))
+        .catch((err) => console.log(err));
+    }
+    await moveIndex();
   }
 };
 
@@ -120,21 +154,25 @@ function JobBoard(props) {
       'f0ae9269-d425-43e8-91e5-177e6033c1f4': {
         ...columns['f0ae9269-d425-43e8-91e5-177e6033c1f4'],
         name: "Interested",
+        dbName: 'interestedIn',
         items: parsed.interestedIn,
       },
       'be643203-6f1b-40ca-92ab-ce6f867e6755': {
         ...columns['be643203-6f1b-40ca-92ab-ce6f867e6755'],
         name: "Applied",
+        dbName: 'appliedFor',
         items: parsed.appliedFor,
       },
       'ec38e4c5-dcf2-4cb7-b648-7f52d2f77966': {
         ...columns['ec38e4c5-dcf2-4cb7-b648-7f52d2f77966'],
         name: "Interviews",
+        dbName: 'upcomingInterviews',
         items: parsed.upcomingInterviews,
       },
       '3da033ba-7d52-46bf-9225-f702731d5939': {
         ...columns['3da033ba-7d52-46bf-9225-f702731d5939'],
         name: "Offers",
+        dbName: 'offers',
         items: parsed.offers
       }
     })
@@ -145,7 +183,6 @@ function JobBoard(props) {
     console.log('jobs', jobs);
   }, []);
 
-  // render() {
   return (
     <div className="jobBoard">
       <p>Your Job Board</p>

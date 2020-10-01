@@ -7,6 +7,7 @@ import '../App.scss';
 
 function App() {
   const [open, setOpen] = React.useState(false);
+  const [newJobAdded, setNewJobAdded] = React.useState(false);
   const [fields, setFields] = React.useState({
     title: '',
     company: '',
@@ -44,6 +45,8 @@ function App() {
       location: '',
       postURL: '',
     })
+
+    setNewJobAdded(!newJobAdded);
   }
 
   return (
@@ -52,7 +55,7 @@ function App() {
         <CreateModal handleChange={handleChange} handleSubmit={handleSubmit}/>
       ) : null}
       <Header openModal={setOpen}/>
-      <Main newJobAdded={open}/>
+      <Main newJobAdded={newJobAdded}/>
       <Footer />
     </div>
   );
