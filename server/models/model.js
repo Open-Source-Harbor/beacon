@@ -63,6 +63,8 @@ const jobSchema = new Schema({
   company: String,
   location: String,
   url: String,
+  column: String,
+  // columnIndex: Number,
   // logo: String, ??
   // salary: Number, ??
   notes: String,
