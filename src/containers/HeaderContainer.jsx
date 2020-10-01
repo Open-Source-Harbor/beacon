@@ -1,10 +1,18 @@
 import React from 'react';
 
 
-function Header() {
+function Header(props) {
+
+  
   return (
     <div className="header">
-      <p>This will be the header<span><a className="logoutButton" href="/api/logout"><button>Logout</button></a></span></p>
+
+      <button onClick={() => props.openModal(true)}>Create Job</button>
+
+      <a className="logoutButton" href="/api/logout">
+        <button>Logout</button>
+      </a>
+      
     </div>
   );
 }

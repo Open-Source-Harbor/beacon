@@ -19,10 +19,6 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/", (req, res) =>
-  res.status(200).sendFile(path.resolve(__dirname, "../public/index.html"))
-);
-
 // API ROUTER
 app.use('/api', apiRouter)
 

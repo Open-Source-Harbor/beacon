@@ -3,7 +3,7 @@ const router = express.Router();
 const loginController = require("../controllers/loginController");
 const cookieController = require("../controllers/cookieController");
 const userController = require("../controllers/userController");
-const jobController = require("../controllers/userController");
+const jobController = require("../controllers/jobController");
 require("dotenv").config();
 
 router.use(

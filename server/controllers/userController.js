@@ -48,6 +48,7 @@ userController.createUser = async (req, res, next) => {
 userController.createDummyUser = async (req, res, next) => {
   try {
     const dummy = req.body;
+    console.log('req.body', dummy)
 
     await User.create(dummy, (err, dumUser) => {
       console.log('dummy ', dumUser);

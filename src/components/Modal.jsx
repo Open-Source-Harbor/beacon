@@ -5,24 +5,24 @@ function Modal()  {
 	// constructor(props) {
 	// 	super(props);
     // }
-    const [editMode, setEditMode] = React.useState(true);
+    // const [editMode, setEditMode] = React.useState(true);
 
 	// render() {
 		return (
 			<div className="modal">
                 <div className="modalHeader"> 
                     <img alt="coming soon" /> */}
-                         { editMode ? (
+                         {/* { editMode ? ( */}
                             <div className="modalTitle">
                                 <h1>Job Title</h1>
                                 <h2>Company</h2>
                                 <h3>Location</h3>
                             </div>
-                        ) : (
+                        {/* ) : (
                             <div className="modalTitle">
                                 <input type="text"></input>
                             </div>
-                        )}
+                        )} */}
                     
                 </div>
                 
