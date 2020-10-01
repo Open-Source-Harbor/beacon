@@ -45,9 +45,9 @@ class JobFeedElem extends Component {
         .replace(/\<.*?>/gim, '')
         .replace(/developer.*$/gim, 'Developer')
         .replace(/engineer.*$/gim, 'Engineer'),
-      company: '',
-      location: '',
-      postURL: '',
+        company: job.company.display_name,
+        location: job.location.display_name,
+        postURL: job.redirect_url,
     };
 
     async function addJob() {

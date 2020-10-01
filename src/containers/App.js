@@ -46,6 +46,7 @@ function App() {
       postURL: '',
     })
 
+    window.location.reload();
     setNewJobAdded(!newJobAdded);
   }
 
