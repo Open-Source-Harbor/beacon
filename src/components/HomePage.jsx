@@ -1,5 +1,5 @@
 import React from 'react';
-import CLIENT_ID from './Secrets.js';
+import CLIENT_ID from "./Secrets.js";
 
 const baseURI = 'https://www.linkedin.com/oauth/v2/authorization';
 const redirectURI = 'http://localhost:8080/api/linkedin';

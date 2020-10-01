@@ -104,17 +104,39 @@ function JobBoard() {
     const userRequest = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: '5f74a8292a769931c7b7b0eb' }),
+      body: JSON.stringify({ userId: '5f756ec40aed7d4e1da0e732' }),
     };
-    const res = await fetch('http://localhost:8080/getJobs', userRequest);
-    res
-      .json()
-      .then((res) => setJobs(res))
-      .catch((err) => console.log(err));
+    const res = await fetch('/api/getJobs', userRequest);
+    const parsed = await res.json();
+
+    await setJobs(parsed);
+    renderJobs(parsed)
   }
 
-  useEffect(() => {
-    fetchData();
+  async function renderJobs(parsed) {
+
+    setColumns({
+      'f0ae9269-d425-43e8-91e5-177e6033c1f4': {
+        ...columns['f0ae9269-d425-43e8-91e5-177e6033c1f4'],
+        items: parsed.interestedIn,
+      },
+      'be643203-6f1b-40ca-92ab-ce6f867e6755': {
+        ...columns['be643203-6f1b-40ca-92ab-ce6f867e6755'],
+        items: parsed.appliedFor,
+      },
+      'ec38e4c5-dcf2-4cb7-b648-7f52d2f77966': {
+        ...columns['ec38e4c5-dcf2-4cb7-b648-7f52d2f77966'],
+        items: parsed.upcomingInterviews,
+      },
+      '3da033ba-7d52-46bf-9225-f702731d5939': {
+        ...columns['3da033ba-7d52-46bf-9225-f702731d5939'],
+        items: parsed.offers
+      }
+    })
+  }
+
+  useEffect(async () => {
+    await fetchData();
     console.log('jobs', jobs);
   }, []);
 
@@ -156,8 +178,8 @@ function JobBoard() {
                           {column.items.map((item, index) => {
                             return (
                               <Draggable
-                                key={item.id}
-                                draggableId={item.id}
+                                key={item._id}
+                                draggableId={item._id}
                                 index={index}
                               >
                                 {(provided, snapshot) => {
@@ -178,7 +200,7 @@ function JobBoard() {
                                         ...provided.draggableProps.style,
                                       }}
                                     >
-                                      {item.name}
+                                      {item.title}
                                     </div>
                                   );
                                 }}
