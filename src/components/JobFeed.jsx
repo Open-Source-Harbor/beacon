@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 class JobFeed extends Component {
-  // constructor(props) {
-  // 	super(props);
-  // }
+  constructor(props) {
+  	super(props);
+  }
 
   render() {
     return (
       <div className="jobFeed">
-        <JobFeedElem />
+        <JobFeedElem setChanger={this.props.setChanger}/>
       </div>
     );
   }
@@ -53,6 +53,7 @@ class JobFeedElem extends Component {
     console.log('feed job fields', fields);
 
     async function addJob() {
+      try {
       const add = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -64,13 +65,17 @@ class JobFeedElem extends Component {
 
       const res = await fetch('http://localhost:8080/api/createJob', add);
 
-      res
-        .json()
-        .then((res) => console.log('added job post from feed', res))
-        .catch((err) => console.log(err));
+      const parse = await res.json()
+      console.log('added job post from feed', parse)
+      
+
+    } catch (err) {
+      console.log(err)
+    }
     }
 
     await addJob();
+    this.props.setChanger(1);
     window.location.reload()
   }
 
@@ -84,9 +89,6 @@ class JobFeedElem extends Component {
             class="jobFeedItems"
             key={`job-${i}`}
             id={`job-${i}`}
-            onClick={(e) => {
-              this.handleClick(job);
-            }}
           >
             <span id="jobFeedTitle">
               {job.title

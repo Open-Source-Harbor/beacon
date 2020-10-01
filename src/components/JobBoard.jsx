@@ -149,7 +149,7 @@ const handleDelete = (e, job, idx, column) => {
 };
 
 function JobBoard(props) {
-  const { userId } = props;
+  const { userId, setChanger, changer } = props;
   const [columns, setColumns] = useState(columnsFromBackend);
   console.log('columns in jobBoard', columns);
   const [jobs, setJobs] = useState({});
@@ -173,6 +173,8 @@ function JobBoard(props) {
     await setJobs(parsed);
     console.log('setJobs with new userid', parsed, userId)
     renderJobs(parsed)
+    const makingIt = changer;
+    setChanger(2);
   } catch (err) {
     console.log('job board post fetch problem ', err)
   }
