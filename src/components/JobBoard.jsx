@@ -62,13 +62,13 @@ const onDragEnd = async (result, columns, setColumns) => {
       },
     });
 
-    console.log('HEY removed: ', removed)
-    console.log('HEY sourceColumn', sourceColumn);
-    console.log('source.droppableId', source.droppableId);
-    console.log('destination col', destColumn);
-    console.log('destination...', destination.droppableId);
+    // console.log('HEY removed: ', removed)
+    // console.log('HEY sourceColumn', sourceColumn);
+    // console.log('source.droppableId', source.droppableId);
+    // console.log('destination col', destColumn);
+    // console.log('destination...', destination.droppableId);
 
-    console.log('indices', destination.index, source.index)
+    // console.log('indices', destination.index, source.index)
 
     // beginning skeleton for posting changes to server after drag event. NEEDS WORK
     async function fetchData() {
@@ -129,23 +129,30 @@ const onDragEnd = async (result, columns, setColumns) => {
 };
 
 function JobBoard(props) {
-  const { newJobAdded } = props;
+  const { userId } = props;
   const [columns, setColumns] = useState(columnsFromBackend);
   console.log('columns in jobboard', columns);
   const [jobs, setJobs] = useState({});
 
   // fetch request to get all board info and jobs for logged in user - NEED TO REDO with new schema
   async function fetchData() {
+
+    console.log('userId in fetch data ', userId)
+    try{
     const userRequest = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: '5f75e7b2d3a398548e7addf1' }),
+      body: JSON.stringify({ userId }),
     };
     const res = await fetch('/api/getJobs', userRequest);
     const parsed = await res.json();
 
     await setJobs(parsed);
+    console.log('setJobs with new userid', parsed, userId)
     renderJobs(parsed)
+  } catch (err) {
+    console.log('job board post fetch problem ', err)
+  }
   }
 
   async function renderJobs(parsed) {
@@ -179,6 +186,7 @@ function JobBoard(props) {
   }
 
   useEffect(async () => {
+    console.log('we need USSER ID', userId)
     await fetchData();
     console.log('jobs', jobs);
   }, []);

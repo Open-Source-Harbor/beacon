@@ -17,13 +17,14 @@ function MainPage(props) {
 
     // }
 
+    console.log('In main page ', props.userId)
 
     // render () {
         return (
     <div className="mainPage">
         <div className="mainBoard">
             <JobFeed />
-            <JobBoard newJobAdded={props.newJobAdded}/>
+            <JobBoard userId={props.userId} newJobAdded={props.newJobAdded}/>
         </div>
         {/* <div className="showArchive">
             <ArchiveBoard />

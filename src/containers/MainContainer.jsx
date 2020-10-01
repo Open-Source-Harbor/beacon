@@ -7,12 +7,14 @@ import MainPageGreeting from '../components/MainPageGreeting.jsx';
 
 
 function Main(props) {
+  const [userID, setUserID] = React.useState('5f75e7b2d3a398548e7addf1');
+
   return (
     <div className="mainContainer">
       <Switch>
         <Route path="/main">
-            <MainPageGreeting />
-            <MainPage newJobAdded={props.newJobAdded}/>
+            <MainPageGreeting setUserID={setUserID} />
+            <MainPage userId={userID} newJobAdded={props.newJobAdded}/>
         </Route>
         <Route exact path="/">
             <HomePage />
