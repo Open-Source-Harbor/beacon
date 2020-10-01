@@ -134,6 +134,17 @@ $borderradius2: 12px;
   display: none;
 }
 
+#clickable {
+  width: 100px;
+  height: 50px;
+  color: $white;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 18px;
+  font-weight: 400;
+}
+
 .modal {
   position: absolute;
   top: 5%;
@@ -142,6 +153,9 @@ $borderradius2: 12px;
   height: 75vh;
   background-color: $white;
   border-radius: 20px;
+}
+
+.popup {
   display: none;
 }
 
@@ -189,7 +203,7 @@ $borderradius2: 12px;
         flex-direction: column;
 
         .jobContainer {
-          color: $gred;
+          color: $white;
           border-radius: $borderradius2;
 
           button {
@@ -216,7 +230,7 @@ $borderradius2: 12px;
         border: none;
         padding: 0;
         margin: 0;
-        background-color: inherit;
+        background-color: $grey;
         font-size: calc(10px + 2vmin);
       }
       .board {
@@ -228,14 +242,14 @@ $borderradius2: 12px;
           font-size: 26px;
         }
         .jobColumn {
-          background-color: aqua;
+          background-color: $lightergrey;
           align-items: center;
           justify-content: center;
           margin: 10px;
           min-width: 18vw; 
           min-height: 60vh;
           .jobColumnElem {
-            background-color: $gred;
+            background-color: transparent;
           }
         }
       }
@@ -294,26 +308,6 @@ $borderradius2: 12px;
     box-shadow: $boxshadow3;
     cursor: pointer;
   }
-}
-
-.modal {
-  z-index: 100;
-  bottom: 2000px;
-  right: 300px;
-  width: 400px;
-  height: 400px;
-  background-color: red
-}
-
-.modal_content {
-  background-color: yellow;
-  position: absolute;
-  bottom: 2000px;
-  right: 300px;
-  width: 200px;
-  padding: 20px;
-  border-radius: 5px;
-  border: 2px solid black;
 }
 
 .close {

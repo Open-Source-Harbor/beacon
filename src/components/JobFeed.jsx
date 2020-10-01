@@ -41,10 +41,13 @@ class JobFeedElem extends Component {
     console.log('button clicked!', job.title);
 
     const fields = {
-      title: job.title,
-      company: job.company.display_name,
-      location: job.location.display_name,
-      postURL: job.redirect_url,
+      title: job.title
+        .replace(/\<.*?>/gim, '')
+        .replace(/developer.*$/gim, 'Developer')
+        .replace(/engineer.*$/gim, 'Engineer'),
+        company: job.company.display_name,
+        location: job.location.display_name,
+        postURL: job.redirect_url,
     };
 
     async function addJob() {
@@ -58,7 +61,7 @@ class JobFeedElem extends Component {
       };
 
       const res = await fetch('http://localhost:8080/api/createJob', add);
-      
+
       res
         .json()
         .then((res) => console.log('added feed job post', res))
