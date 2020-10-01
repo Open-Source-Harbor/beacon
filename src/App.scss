@@ -134,14 +134,25 @@ $borderradius2: 12px;
   display: none;
 }
 
+#clickable {
+  width: 200px;
+  height: 70px;
+  color: $white;
+  font-size: 18px;
+  font-weight: 400;
+}
+
 .modal {
   position: absolute;
   top: 5%;
   left: 10%;
   width: 80vw;
   height: 75vh;
-  background-color: $white;
+  background-color: $gred;
   border-radius: 20px;
+}
+
+.popup {
   display: none;
 }
 
@@ -294,26 +305,6 @@ $borderradius2: 12px;
     box-shadow: $boxshadow3;
     cursor: pointer;
   }
-}
-
-.modal {
-  z-index: 100;
-  bottom: 2000px;
-  right: 300px;
-  width: 400px;
-  height: 400px;
-  background-color: red
-}
-
-.modal_content {
-  background-color: yellow;
-  position: absolute;
-  bottom: 2000px;
-  right: 300px;
-  width: 200px;
-  padding: 20px;
-  border-radius: 5px;
-  border: 2px solid black;
 }
 
 .close {

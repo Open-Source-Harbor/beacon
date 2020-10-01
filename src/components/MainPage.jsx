@@ -14,13 +14,13 @@ class MainPage extends Component  {
             <div className="mainBoard">
               <JobFeed />
               <JobBoard />
-              <Chatroom />
+              {/* <Chatroom /> */}
             </div>
             {/* <div className="showArchive">
             <ArchiveBoard />
         </div>         */}
             <div className="showModal">
-              <Modal />
+              {/* <Modal /> */}
             </div>
           </div>
         ); 

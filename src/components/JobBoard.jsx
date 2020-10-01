@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import JobColumn from './JobColumn';
+import Modal from './Modal';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -33,6 +34,7 @@ const columnsFromBackend = {
 
 // function to update columns after dragging job post
 const onDragEnd = (result, columns, setColumns) => {
+  
   if (!result.destination) return;
   const { source, destination } = result;
   console.log('source', source);
@@ -96,53 +98,56 @@ const onDragEnd = (result, columns, setColumns) => {
 
 function JobBoard() {
   const [columns, setColumns] = useState(columnsFromBackend);
-  console.log('columns in jobboard', columns);
+  console.log("columns in jobboard", columns);
   const [jobs, setJobs] = useState({});
+  const [open, setOpen] = useState(false);
+  const [display, setDisplay] = useState('none')
 
   // fetch request to get all board info and jobs for logged in user - NEED TO REDO with new schema
   async function fetchData() {
     const userRequest = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: '5f75e7b2d3a398548e7addf1' }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: "5f75e7b2d3a398548e7addf1" }),
     };
-    const res = await fetch('/api/getJobs', userRequest);
+    const res = await fetch("/api/getJobs", userRequest);
     const parsed = await res.json();
 
     await setJobs(parsed);
-    renderJobs(parsed)
+    renderJobs(parsed);
   }
 
   async function renderJobs(parsed) {
-
     setColumns({
-      'f0ae9269-d425-43e8-91e5-177e6033c1f4': {
-        ...columns['f0ae9269-d425-43e8-91e5-177e6033c1f4'],
+      "f0ae9269-d425-43e8-91e5-177e6033c1f4": {
+        ...columns["f0ae9269-d425-43e8-91e5-177e6033c1f4"],
         name: "Interested",
         items: parsed.interestedIn,
       },
-      'be643203-6f1b-40ca-92ab-ce6f867e6755': {
-        ...columns['be643203-6f1b-40ca-92ab-ce6f867e6755'],
+      "be643203-6f1b-40ca-92ab-ce6f867e6755": {
+        ...columns["be643203-6f1b-40ca-92ab-ce6f867e6755"],
         name: "Applied",
         items: parsed.appliedFor,
       },
-      'ec38e4c5-dcf2-4cb7-b648-7f52d2f77966': {
-        ...columns['ec38e4c5-dcf2-4cb7-b648-7f52d2f77966'],
+      "ec38e4c5-dcf2-4cb7-b648-7f52d2f77966": {
+        ...columns["ec38e4c5-dcf2-4cb7-b648-7f52d2f77966"],
         name: "Interviews",
         items: parsed.upcomingInterviews,
       },
-      '3da033ba-7d52-46bf-9225-f702731d5939': {
-        ...columns['3da033ba-7d52-46bf-9225-f702731d5939'],
+      "3da033ba-7d52-46bf-9225-f702731d5939": {
+        ...columns["3da033ba-7d52-46bf-9225-f702731d5939"],
         name: "Offers",
-        items: parsed.offers
-      }
-    })
+        items: parsed.offers,
+      },
+    });
   }
 
   useEffect(async () => {
     await fetchData();
-    console.log('jobs', jobs);
+    console.log("jobs", jobs);
   }, []);
+
+  
 
   // render() {
   return (
@@ -156,9 +161,9 @@ function JobBoard() {
             return (
               <div
                 style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
                 key={columnId}
               >
@@ -172,20 +177,30 @@ function JobBoard() {
                           ref={provided.innerRef}
                           style={{
                             background: snapshot.isDraggingOver
-                              ? '#92E2FD'
-                              : 'white',
+                              ? "#92E2FD"
+                              : "white",
                             padding: 4,
                             width: 250,
                             minHeight: 500,
-                            borderRadius: '12px'
+                            borderRadius: "12px",
                           }}
                         >
                           {column.items.map((item, index) => {
                             return (
                               <Draggable
+                                id={`job-${index}`}
                                 key={item._id}
                                 draggableId={item._id}
                                 index={index}
+                                onClick={
+                                  (e) => console.log(e.target.id)
+                                  // (event, item, index) => {
+                                  // const clicker = document.getElementById(event.target.id);
+                                  // clicker.addEventListener('click', e => {
+                                  //   setOpen(true)
+                                  // })
+                                  // }
+                                }
                               >
                                 {(provided, snapshot) => {
                                   return (
@@ -194,25 +209,42 @@ function JobBoard() {
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       style={{
-                                        userSelect: 'none',
+                                        userSelect: "none",
                                         padding: 16,
-                                        margin: '7px',
-                                        minHeight: '50px',
+                                        margin: "7px",
+                                        minHeight: "50px",
                                         backgroundColor: snapshot.isDragging
-                                          ? '#132853'
-                                          : '#3367F9',
-                                        color: 'white',
+                                          ? "#132853"
+                                          : "#3367F9",
+                                        color: "white",
                                         ...provided.draggableProps.style,
-                                        borderRadius: '8px'
+                                        borderRadius: "8px",
                                       }}
                                     >
-                                      {item.title}
+                                      <span>
+                                        <button
+                                          id="clickable"
+                                          style={{ backgroundColor: "red" }}
+                                          onClick={(e) => {
+                                            // window.alert(e.target.id)
+                                            setOpen(true)
+                                            }
+                                          }
+                                        >
+                                          {item.title}
+                                        </button>
+                                      </span>
                                     </div>
                                   );
                                 }}
+                                
                               </Draggable>
                             );
                           })}
+                          {open ? (<Modal
+                            open={open}
+                            setOpen={setOpen}
+                          ></Modal> ): null}
                           {provided.placeholder}
                         </div>
                       );

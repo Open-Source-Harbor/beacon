@@ -21,12 +21,12 @@ class Footer extends Component {
     return (
       <div className="footer">
         <nav className="footerText">Privacy Policy</nav>
-        <div className="chatroomContainer">
+        {/* <div className="chatroomContainer">
           <div className="chatButton" onClick={this.togglePop}>
             <button className="chatPopup">Chatroom</button>
           </div>
           {this.state.seen ? <Popup toggle={this.togglePop} /> : null}
-        </div>
+        </div> */}
       </div>
     );
   }
