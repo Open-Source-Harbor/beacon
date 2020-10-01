@@ -50,6 +50,8 @@ class JobFeedElem extends Component {
         postURL: job.redirect_url,
     };
 
+    console.log('feed job fields', fields);
+
     async function addJob() {
       const add = {
         method: 'POST',
