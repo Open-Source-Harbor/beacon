@@ -5,8 +5,6 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// MOCK DATA - need to replace references to this data with real/fetched data
-
 const columnsFromBackend = {
   [uuidv4()]: {
     name: 'Interested',
@@ -125,10 +123,10 @@ const onDragEnd = async (result, columns, setColumns) => {
 
 const handleDelete = (e, job, idx, column) => {
   const jobId = job._id;
-  console.log('column db', column)
-  console.log('jobId', jobId);
-  console.log('e parent', e.target.parentNode);
-  console.log('index', idx)
+  // console.log('column db', column)
+  // console.log('jobId', jobId);
+  // console.log('e parent', e.target.parentNode);
+  // console.log('index', idx)
   fetch(`/api/${jobId}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -143,9 +141,11 @@ const handleDelete = (e, job, idx, column) => {
       if (response.status === 200) {
         let post = document.getElementById(`${jobId}`);
         post.remove();
+        // setColumns()
       }
     })
     .catch((err) => console.log(err));
+  window.location.reload();
 };
 
 function JobBoard(props) {
@@ -353,7 +353,7 @@ function JobBoard(props) {
                             );
                           })}
                           {open ? (
-                            <Modal open={open} setOpen={setOpen} job={modalJob}></Modal>
+                            <Modal open={open} setOpen={setOpen} job={modalJob} fetchData={fetchData}></Modal>
                           ) : null}
                           {provided.placeholder}
                         </div>

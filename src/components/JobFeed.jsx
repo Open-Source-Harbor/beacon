@@ -66,11 +66,12 @@ class JobFeedElem extends Component {
 
       res
         .json()
-        .then((res) => console.log('added feed job post', res))
+        .then((res) => console.log('added job post from feed', res))
         .catch((err) => console.log(err));
     }
 
     await addJob();
+    window.location.reload()
   }
 
   render() {

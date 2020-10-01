@@ -4,48 +4,76 @@ import ToDo from "./ToDo"
 function Modal (props) {
 
     const { setOpen, job } = props;
-    const [notes, setNotes] = React.useState([]);
+    // const [notes, setNotes] = React.useState(job.notes);
+    // const [newNote, setNewNote] = React.useState('')
 
+
+    const [longNote, setLongNote] = React.useState(job.longNotes);
+;
     // React.useEffect(() => {
-    //     setNotes(job)
+    //     setNotes(job.notes);
     // })
     
     //   const handleSubmit = (e) => {
     //     e.preventDefault();
-    //     saveJob();
-    //     setOpen(false); // Close modal on submit
+    //     setNotes([
+    //         ...notes,
+    //         newNote
+    //     ])
+    //     saveNote();
+
+    //     const element = document.getElementById('textareaNote');
+    //     element.value = '';
+    //     console.log('element', element)
+    //     console.log('value', element.value)
+    //     const other = document.getElementById('inputNote');
+    //     console.log('other ',other)
     //   }
     
     //   const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setFields({
-    //       ...fields,
-    //       [name]: value,
-    //     });
-    //   }
-    
-    //   const saveJob = async () => {
-    //     const response = await fetch('/api/createJob', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json'
-    //       },
-    //       body: JSON.stringify({ newJob: fields, userId: '5f75e7b2d3a398548e7addf1' })
-    //     })
-    //     const parsedResp = response.json();
-    
-    //     setFields({
-    //       title: '',
-    //       company: '',
-    //       location: '',
-    //       postURL: '',
-    //     })
-    
-    //     window.location.reload();
-    //     setNewJobAdded(!newJobAdded);
+    //       console.log('e target', e.target)
+    //     const { value } = e.target;
+    //     setNewNote(value);
     //   }
 
+      const handleChange = (e) => {
+        console.log('e target', e.target)
+        const { value } = e.target;
+        setLongNote(value);
+    }
 
+    const handleSubmit = (e) => {
+            e.preventDefault();
+            // setNotes([
+            //     ...notes,
+            //     newNote
+            // ])
+            saveNote();
+    
+            // const element = document.getElementById('textareaNote');
+            // element.value = '';
+            // console.log('element', element)
+            // console.log('value', element.value)
+            // const other = document.getElementById('inputNote');
+            // console.log('other ',other)
+          }
+        
+    
+      const saveNote = async () => {
+        const response = await fetch('/api/addNote', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ jobId: job._id, longNotes: longNote })
+        })
+        const parsedResp = await response.json();
+
+        console.log('parsed Reponse', parsedResp)
+        
+        props.fetchData();
+        // setNewNote('');
+      }
 
 
     // console.log('did the job come through in modal??', job)
@@ -67,8 +95,8 @@ function Modal (props) {
                     <form>
                         <div>
                             <p>Notes </p>
-                            <textarea rows="10" cols="50" placeholder="Add your notes here..." />
-                            <input type="submit" value="Save" />
+                            <textarea id="textareaNote" rows="10" cols="50" value={longNote} onChange={handleChange}/>
+                            <input id="inputNote" type="submit" value="Save" onClick={handleSubmit}/>
                         </div>
                         {/* <div>
                         <span>Salary </span>
@@ -87,9 +115,9 @@ function Modal (props) {
                         <span>Interviews </span>
                         
                     </div> */}
-                    {job.notes.map(note => {
+                    {/* {notes.map(note => {
                         return <div>{note}</div>
-                    })}
+                    })} */}
 				</div>
         <div className="close">
           <button className="closeButton" onClick={() => setOpen(false)}>X</button>
