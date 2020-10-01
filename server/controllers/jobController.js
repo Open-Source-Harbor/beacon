@@ -4,10 +4,10 @@ const jobController = {};
 
 jobController.getFeed = async (req, res, next) => {
   try {
-    console.log(
-      'first line of jobController.getFeed: process.env.BASE_URI: ',
-      process.env.BASE_URI
-    );
+    // console.log(
+    //   'first line of jobController.getFeed: process.env.BASE_URI: ',
+    //   process.env.BASE_URI
+    // );
     const baseURI = process.env.BASE_URI;
     const appID = process.env.APP_ID;
     const appKey = process.env.APP_KEY;
@@ -51,7 +51,7 @@ jobController.getFeed = async (req, res, next) => {
 
 jobController.getJobs = async (req, res, next) => {
   try {
-    console.log('IN getJobs', res.locals.user)
+    // console.log('IN getJobs', res.locals.user)
     const user = res.locals.user;
     const board1 = user.boards[0];
     const archivedIDs = user.archived;
@@ -95,7 +95,7 @@ jobController.getJobs = async (req, res, next) => {
       archived,
     };
 
-    console.log('entire board!!', board);
+    // console.log('entire board!!', board);
 
     res.locals.jobs = board;
     return next();
@@ -132,7 +132,7 @@ jobController.createJob = async (req, res, next) => {
   // console.log('createJob invoked')
   try {
     const { newJob, userId } = req.body;
-    console.log('userId in CREATE JOB', userId);
+    // console.log('userId in CREATE JOB', userId);
     models.Job.create({ ...newJob }, async (err, result) => {
       res.locals.job = result;
       // console.log('job creation result', result)
