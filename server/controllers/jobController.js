@@ -273,4 +273,42 @@ jobController.deleteJob = async (req, res, next) => {
   }
 };
 
+jobController.addNote = async (req, res, next) => {
+  try {
+    const { jobId, newNote, notes } = req.body;
+    console.log('newNote', newNote);
+    console.log('notes', notes);
+
+    await models.Job.findOneAndUpdate({ _id: jobId }, { $addToSet: { notes: newNote }}, (error, newJob) => {
+      if (error) console.log('addNote error ', error);
+      res.locals.job = newJob;
+      return next();
+    })
+  } catch (err) {
+    return next({
+      log: `An error occurred in addNote ${err}`,
+      message: { err: 'An error occurred in addNote, check server for more details' },
+    });
+  }
+}
+
+jobController.addLongNote = async (req, res, next) => {
+  try {
+    const { jobId, longNotes } = req.body;
+    // console.log('newNote', newNote);
+    // console.log('notes', notes);
+
+    await models.Job.findOneAndUpdate({ _id: jobId }, { longNotes }, (error, newJob) => {
+      if (error) console.log('addNote error ', error);
+      res.locals.job = newJob;
+      return next();
+    })
+  } catch (err) {
+    return next({
+      log: `An error occurred in addLongNote ${err}`,
+      message: { err: 'An error occurred in addLongNote, check server for more details' },
+    });
+  }
+}
+
 module.exports = jobController;

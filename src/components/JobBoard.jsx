@@ -315,7 +315,7 @@ function JobBoard(props) {
                             );
                           })}
                           {open ? (
-                            <Modal open={open} setOpen={setOpen} job={modalJob}></Modal>
+                            <Modal open={open} setOpen={setOpen} job={modalJob} fetchData={fetchData}></Modal>
                           ) : null}
                           {provided.placeholder}
                         </div>
