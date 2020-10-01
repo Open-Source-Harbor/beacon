@@ -1,18 +1,62 @@
+const { default: fetch } = require("node-fetch");
 const models = require("../models/model.js");
 const jobController = {};
 
+jobController.getFeed = async (req, res, next) => {
+  try {
+    console.log('first line of jobController.getFeed: process.env.BASE_URI: ', process.env.BASE_URI);
+    const baseURI = process.env.BASE_URI;
+    const appID = process.env.APP_ID;
+    const appKey = process.env.APP_KEY;
+    const resultsPerPage = 20;
+    const keyword0 = "javascript";
+    const keyword1 = "developer";
+    const exclude0 = "java";
+    const location = "london";
+    const sortBy = "salary";
+    const salaryMin = 60000;
+    const fullTime = 1;
+    const permanent = 1;
+    const contentType = "application/json";
+    const fullURI = `${baseURI}app_id=${appID}&app_key=${appKey}&results_per_page=${resultsPerPage}&what=${keyword0}%20${keyword1}&what_exclude=${exclude0}&where=${location}&sort_by=${sortBy}&salary_min=${salaryMin}&full_time=${fullTime}&permanent=${permanent}&content-type=${contentType}`;
+    
+    console.log('jobController.getFeed fullURI: ', fullURI);
+    
+    await fetch(fullURI)
+      .then(res => res.json())
+      .then(data => {
+        console.log('jobController.getFeed data: ', data)
+        console.log("jobController.getFeed data.results: ", data.results);
+        res.locals.feed = data.results;
+        console.log("jobController.getFeed res.locals.feed: ", res.locals.feed);
+      })
+      .catch(err => console.log(`error occurred during GET request in getFeed: ${err}`))
+
+    return next();
+  } catch (err) {
+    return next({
+      log: `An error occurred while fetching user: ${err}`,
+      message: {
+        err:
+          "An error occurred in userController.getUser. Check server for more details",
+      },
+    });
+  }
+};
+
+
 jobController.getJobs = async (req, res, next) => {
   try {
-    console.log('IN getJobs', )
+    // console.log('IN getJobs', )
     const user = res.locals.user;
     const board1 = user.boards[0];
     const archivedIDs = user.archived;
 
 
     const interestedIn = await Promise.all(await board1.interestedIn.map(async (jobId) => {
-      console.log('this is the id in the map ', jobId);
+      // console.log('this is the id in the map ', jobId);
       const job = await models.Job.findOne({ _id: jobId });
-      console.log('we got it??', job);
+      // console.log('we got it??', job);
       return job;
     }))
 
@@ -38,7 +82,7 @@ jobController.getJobs = async (req, res, next) => {
       archived
     }
 
-    console.log('entire board!!', board);
+    // console.log('entire board!!', board);
 
     res.locals.jobs = board;
     return next();
@@ -71,15 +115,15 @@ jobController.getJobs = async (req, res, next) => {
 
 
 jobController.createJob = async (req, res, next) => {
-  console.log('createJob invoked')
+  // console.log('createJob invoked')
   try {
     const { newJob, userId} = req.body;
 
     models.Job.create({...newJob}, async (err, result) => {
       res.locals.job = result;
-      console.log('job creation result', result)
+      // console.log('job creation result', result)
       await models.User.findOneAndUpdate({ _id: userId }, {$addToSet: { 'boards.0.interestedIn': result._id }}, (err, newUser) => {
-        console.log('about to hit next', newUser.boards.interestedIn)
+        // console.log('about to hit next', newUser.boards.interestedIn)
         return next();
       });
     })

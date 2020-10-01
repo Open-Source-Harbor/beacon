@@ -1,12 +1,71 @@
+const { User } = require("../models/model");
 const loginController = {};
 const fetch = require('node-fetch')
+const fs = require("fs");
+const path = require('path')
 require("dotenv").config();
 
+const baseURI = "https://www.linkedin.com/oauth/v2/authorization";
 const redirectURI = "http://localhost:8080/api/login"; 
+const authorizationURI = `${baseURI}?response_type=code&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirectURI}&state=${process.env.STATE}&scope=${process.env.SCOPE}`;
+
+loginController.isLoggedIn = async (req, res, next) => {
+  try {
+    console.log("=====> req.cookies.user is logged in: ", req.cookies.user);
+    const token = req.cookies.user;
+    console.log("loginController.isLoggedIn token: ", token);
+
+    // A) If either of the cookies don't exist, or if the provider isn't linkedin, move onto next middleware
+    if (!req.cookies.user || !req.cookies.provider || req.cookies.provider !== "linkedin") {
+      console.log("going to next piece of middleware: ");
+      return next();
+    }
+
+    // B) If 2 cookies exist, token and provider cookie is linkedin:
+    if (token && req.cookies.provider === "linkedin") {
+      // 1) Query database for user
+      const result = await User.findOne({ token: token });
+      console.log("=====> loginController.isLoggedIn findOne result: ", result);
+      // 1A) If user doesn't exist in database, go to next midddleware to create new account
+      // 1B) If user exists in database, re-route to frontend, 3000/main
+      if (!result) {
+        console.log("loginController.isLoggedIn db query is null: ", result);
+        return next();
+      } else {
+        console.log("user exists already. redirecting to user's page");
+        fs.writeFileSync(path.resolve(__dirname, "../temp.json"), JSON.stringify(token));
+        return res.redirect("http://localhost:3000/main");
+      }
+    }
+
+    // C) Anything else, just go back to main site
+    return res.redirect("http://localhost:3000");
+  } catch (err) {
+    console.log(`error occured during loginController.isLoggedIn: ${err}`);
+  }
+};
+
+// loginController.oAuth = (req, res, next) => {
+//   try {
+//     console.log("=====> first line of loginController.OAuth, process.env.CLIENT_ID: ",process.env.CLIENT_ID);
+//     // console.log("=====>loginController.afterConsent hits");
+//     fetch(authorizationURI)
+//       // .then(res => console.log(`loginController.oAuth fetch request raw response: ${res}`))
+//       // .catch(err => console.log(`error occurred during loginController.oAuth GET request`));
+//   } catch (err) {
+//     return next({
+//       log: `An error occurred while getting access token: ${err}`,
+//       message: {
+//         err:
+//           "An error occurred in loginController.requestToken. Check server for more details",
+//       },
+//     });
+//   }
+// }
 
 loginController.requestToken = async (req, res, next) => {
   try {
-    console.log("=====> process.env.CLIENT_ID: ", process.env.CLIENT_ID)
+    console.log("=====> first line of loginController.requestToken, process.env.CLIENT_ID: ", process.env.CLIENT_ID)
     // console.log("=====>loginController.afterConsent hits");
     const code = req.query.code;
     console.log('======>code: ', code);
@@ -56,14 +115,18 @@ loginController.getUserNamePhoto = async (req, res, next) => {
       })
       .then((response) => {
         if (response) {
-          console.log("=====> name & photo fetch response: ", response);
+          // console.log("=====> name & photo fetch response 1: ", response);
+          // console.log("=====> name & photo fetch response 2: ", response.profilePicture['displayImage~'].paging);
+          // console.log("=====> name & photo fetch response 3: ", response.profilePicture["displayImage~"].elements[0]);
+          // console.log("=====> name & photo fetch response 4: ", response.profilePicture["displayImage~"].elements[0].data);
+          // console.log("=====> name & photo fetch response 5: ", response.profilePicture["displayImage~"].elements[0].data['com.linkedin.digitalmedia.mediaartifact.StillImage']);
           res.locals.user = {};
           if (response.id) res.locals.user.l_id = response.id;
           if (response.firstName) res.locals.user.firstName = response.firstName.localized.en_US;
           if (response.lastName) res.locals.user.lastName = response.lastName.localized.en_US;
           if (response.profilePicture) res.locals.user.photo = response.profilePicture.displayImage;
           res.locals.user.token = res.locals.token;
-          console.log("res.locals.user after first FETCH: ", res.locals.user);
+          // console.log("res.locals.user after first FETCH: ", res.locals.user);
         };
       })
       .catch((err) =>
@@ -97,9 +160,13 @@ loginController.getUserEmail = async (req, res, next) => {
       })
       .then((response) => {
         if (response) {
-          // console.log("=====> email fetch response: ", response);
-          if (response.elements) res.locals.user.email = response.elements[0].handle;
-          console.log('final user object: ', res.locals.user);
+          console.log("=====> email fetch response: ", response);
+          console.log("=====> email fetch response: ", response.elements[0]['handle~'].emailAddress);
+          if (response.elements) {
+            res.locals.user.email = response.elements[0]['handle~'].emailAddress;
+            console.log('final user object: ', res.locals.user);
+            fs.writeFileSync(path.resolve(__dirname, "../temp.json"), JSON.stringify(res.locals.user));
+          }
         }
       })
       .catch((err) =>

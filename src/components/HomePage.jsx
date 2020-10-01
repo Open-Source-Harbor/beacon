@@ -12,7 +12,7 @@ function HomePage() {
     <div className="homePage">
       <p>This will be the HomePage</p>
       <a href={authorizationURI}>
-        <button>Login</button>
+        <button className="headerButton" id="loginButton">Login</button>
       </a>
     </div>
   );

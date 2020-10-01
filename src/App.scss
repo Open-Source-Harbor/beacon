@@ -1,5 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Open+Sans&family=Inter:wght@100&family=Inter:wght@100&family=Lexend+Peta&family=Nunito+Sans:wght@300;400;600&family=Quicksand:wght@300&display=swap');
+
+// Grayscale
+$white: #ffffff;
+$lightergrey: #eeeeee;
+$lightgrey: #999999;
+$grey: #aaaaaa;
+$mediumgrey: #888888;
+$darkgrey: #444d56;
+$transparentwhite: rgba(255,255,255, 0.1);
+
+// Google Colors
+$gblue: #3788fc;
+$gred: #fc4039;
+$gyellow: #febc2c;
+$ggreen: #32b44f;
+
+// Google Color Box Shadows
+$gblueboxshadow: 0 4px 20px 0 rgba(22, 110, 210, 0.14), 0 7px 10px -5px rgba(0, 157, 255, 0.4); 
+$gredboxshadow: 0 4px 20px 0 rgba(225, 64, 19, 0.14), 0 7px 10px -5px rgba(255, 42, 0, 0.4);
+$gyellowboxshadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(255, 152, 0,.4);
+$ggreenboxshadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(0, 255, 42, 0.4);
+
+// Grey Box Shadows
+$boxshadow1: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12);
+$boxshadow2: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+$boxshadow3: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+$boxshadow4: 0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12);
+
+
+// Fonts
+$mainfont: 'Roboto';
+$fontsize1: 18px;
+
+$borderradius1: 4px;
+$borderradius2: 12px;
+
 .App {
   text-align: center;
+  font-family: $mainfont;
 }
 
 /* @media (prefers-reduced-motion: no-preference) {
@@ -9,14 +47,64 @@
 } */
 
 .header {
-  background-color: #282c34;
+  background-image: url('./assets/clouds-white-image3.png');
+  background-size: cover;
   min-height: 10vh;
+  height: 280px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: $white;
+  #logo {
+    background-image: url('./assets/beacon-icon-white.png');
+    background-size: cover;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 40px;
+    left: 40px;
+  }
+}
+
+.headerButton {
+  background: transparent;
+  padding: 9px 18px;
+  font-size: 24px;
+  color: $white;
+  border-radius: $borderradius1;
+  border: none;
+  outline: 0;
+  box-shadow: $boxshadow2;
+  &:hover{
+    border: none;
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    outline: 0;
+  }
+
+  &:focus{
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+  }
+
+  &:active{
+    border: none;
+    cursor: pointer;
+    box-shadow: $boxshadow3;
+    outline: 0;
+  }
+  
+}
+
+#loginButton {
+  color: $mediumgrey;
+  &:hover {
+    box-shadow: $boxshadow4;
+  }
 }
 
 .createModal {
@@ -26,7 +114,7 @@
   height: 30%;
   top: 25%;
   left: 38%;
-  background-color: rgb(28, 28, 28);
+  background-color: $lightergrey;
   border-radius: 20px;
 }
 
@@ -34,7 +122,7 @@
   position: absolute;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(36, 29, 255, 0.353);
+  background-color: $ggreen;
   margin: 0;
   padding: 0;
   display: none;
@@ -46,42 +134,70 @@
   left: 10%;
   width: 80vw;
   height: 75vh;
-  background-color: rgb(149, 149, 149);
+  background-color: $white;
   border-radius: 20px;
   display: none;
 }
 
 .mainContainer {
-  background-color: #ebeef3;
+  background-color: $white;
   min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: black;
+  color: $darkgrey;
 }
 
+.mainPageGreeting {
+  span {
+    font-size: 14px;
+  }
+}
 .mainPage {
   // background-color: white;
   min-height: 70vh;
   display: flex;
   // justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: black;
+  color: $darkgrey;
   .mainBoard {
     // background-color: white;
     display: flex;
     flex-direction: row;
     .jobFeed {
-      background-color: white;
+      background-color: $lightergrey;
+      border-radius: $borderradius2;
       margin: 10px;
+      padding: 10px;
       min-width: 20vw;
+
+      .jobFeedElem {
+        display: flex;
+        flex-direction: column;
+
+        .jobContainer {
+          color: $gred;
+          border-radius: $borderradius2;
+
+          button {
+            background-color: $gblue;
+            border: none;
+            border-radius: $borderradius1;
+            color: $white;
+            font-size: $fontsize1;
+            height: 40px;
+            margin: 5px;
+          }
+        }
+      }
     }
     .jobBoard {
-      background-color: white;
+      background-color: $lightergrey;
       margin: 10px;
       min-width: 70vw;
+      border-radius: $borderradius2;
       .ul {
         list-style-type: none;
       }
@@ -95,13 +211,20 @@
       .board {
         display: flex;
         flex-direction: row;
+        justify-content: center;
+
+        h2 {
+          font-size: 26px;
+        }
         .jobColumn {
           background-color: aqua;
+          align-items: center;
+          justify-content: center;
           margin: 10px;
           min-width: 18vw; 
           min-height: 60vh;
           .jobColumnElem {
-            background-color: purple;
+            background-color: $gred;
           }
         }
       }
@@ -110,14 +233,21 @@
 }
 
 .footer {
-  background-color: #282c34;
+  background-image: url('./assets/grass-wide.png');
+  background-size: contain;
   min-height: 10vh;
+  height: 180px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+
+  .footerText {
+    margin-top: 100px;
+    font-size: 18px;
+  }
 }
 
 /* .App-link {
@@ -132,8 +262,3 @@
     transform: rotate(360deg);
   }
 } */
-
-
-.logoutButton {
-  
-}

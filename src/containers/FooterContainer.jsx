@@ -4,7 +4,9 @@ import React from 'react';
 function Footer() {
   return (
     <div className="footer">
-      <p>This will be the Footer</p>
+      <nav className="footerText">
+        Privacy Policy
+      </nav>
     </div>
   );
 }

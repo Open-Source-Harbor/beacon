@@ -136,14 +136,14 @@ function JobBoard() {
   }
 
   useEffect(async () => {
-    await fetchData();
+    // await fetchData();
     console.log('jobs', jobs);
   }, []);
 
   // render() {
   return (
     <div className="jobBoard">
-      <p>This is a board</p>
+      <p>Your Job Board</p>
       <div className="board">
         <DragDropContext
           onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
@@ -169,10 +169,11 @@ function JobBoard() {
                           style={{
                             background: snapshot.isDraggingOver
                               ? '#92E2FD'
-                              : 'lightgrey',
+                              : 'white',
                             padding: 4,
                             width: 250,
                             minHeight: 500,
+                            borderRadius: '12px'
                           }}
                         >
                           {column.items.map((item, index) => {
@@ -198,6 +199,7 @@ function JobBoard() {
                                           : '#3367F9',
                                         color: 'white',
                                         ...provided.draggableProps.style,
+                                        borderRadius: '8px'
                                       }}
                                     >
                                       {item.title}

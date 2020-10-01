@@ -1,6 +1,8 @@
 const { models } = require("mongoose");
 const { User } = require("../models/model");
 const userController = {};
+const fs = require("fs");
+const path = require("path");
 
 // userController.verifyUser = (req, res, next) => {
 //   console.log('=====> first line of userController.verifyUser hit')
@@ -52,22 +54,31 @@ userController.createUser = async (req, res, next) => {
 
 userController.getUser = async (req, res, next) => {
   try {
-    console.log("IN getUser");
-    const token = req.cookies.user;
-    console.log("token", token);
-
+    let token;
+    // console.log("====> first line in userController.getUser");
+    const content = JSON.parse(
+      fs.readFileSync(path.resolve(__dirname, "../temp.json"), "UTF-8")
+    );
+    // console.log("=====> userController.getUser content: ", content);
+    if (typeof content === "string") {
+      token = content;
+    };
+    if (typeof content === "object" && content.token) {
+      token = content.token;
+    };
+    // console.log("====> userController.getUser content: ", token);
     const user = await User.findOne({ token: token });
-
-    res.locals.user = user;
-    console.log("res.locals,user", user);
-
-    return next();
+    if (user) {
+      res.locals.user = user;
+      // console.log("====> userController.getUser res.locals.user", res.locals.user);
+      return next();
+    };
   } catch (err) {
     return next({
-      log: `An error occurred while fetching dummy user: ${err}`,
+      log: `An error occurred while fetching user: ${err}`,
       message: {
         err:
-          "An error occurred in userController.getDummyUser. Check server for more details",
+          "An error occurred in userController.getUser. Check server for more details",
       },
     });
   }
@@ -77,10 +88,10 @@ userController.getUser = async (req, res, next) => {
 userController.createDummyUser = async (req, res, next) => {
   try {
     const dummy = req.body;
-    console.log('req.body', dummy)
+    // console.log('req.body', dummy)
 
     await User.create(dummy, (err, dumUser) => {
-      console.log('dummy ', dumUser);
+      // console.log('dummy ', dumUser);
       res.locals.user = dumUser;
       return next();
     })
@@ -95,13 +106,13 @@ userController.createDummyUser = async (req, res, next) => {
 
 userController.getDummyUser = async (req, res, next) => {
   try {
-    console.log('IN getDummyUser', )
+    // console.log('IN getDummyUser', )
     const { userId } = req.body;
-    console.log('userId', userId)
+    // console.log('userId', userId)
 
     const user = await User.findOne({ _id: userId }, (err, user) => {
       res.locals.user = user;
-      console.log('res.locals,user', user);
+      // console.log('res.locals,user', user);
   
       return next();
     });

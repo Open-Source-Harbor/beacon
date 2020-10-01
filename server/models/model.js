@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+require("dotenv").config();
 
-const MONGO_URI = "mongodb+srv://beacon:beacon@beacon-0.bfq4r.mongodb.net/beacon?retryWrites=true&w=majority";
+const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI, {
 	// options for the connect method to parse the URI
