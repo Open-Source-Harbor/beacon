@@ -5,7 +5,7 @@ function Modal()  {
 	// constructor(props) {
 	// 	super(props);
     // }
-    // const [editMode, setEditMode] = React.useState(false);
+    // const [editMode, setEditMode] = React.useState(true);
 
 	// render() {
 		return (

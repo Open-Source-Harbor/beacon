@@ -3,7 +3,7 @@ const jobController = {};
 
 jobController.getJobs = async (req, res, next) => {
   try {
-console.log('IN getJobs', )
+    console.log('IN getJobs', )
     const user = res.locals.user;
     const board1 = user.boards[0];
     const archivedIDs = user.archived;
@@ -78,8 +78,10 @@ jobController.createJob = async (req, res, next) => {
     models.Job.create({...newJob}, async (err, result) => {
       res.locals.job = result;
       console.log('job creation result', result)
-      await models.User.findOneAndUpdate({ _id: userId }, {$push: { 'boards.0.interestedIn': result._id }});
-      return next();
+      await models.User.findOneAndUpdate({ _id: userId }, {$addToSet: { 'boards.0.interestedIn': result._id }}, (err, newUser) => {
+        console.log('about to hit next', newUser.boards.interestedIn)
+        return next();
+      });
     })
 
   } catch (err) {
@@ -138,7 +140,7 @@ jobController.archive = async (req, res, next) => {
     const previousColumn = newBoards[prevCol];
     const previousColumnField = `boards.0.${prevCol}`;
 
-    await models.User.findOneAndUpdate({ _id: userId }, {$push: { 'archived': jobId }, [previousColumnField]: previousColumn }, (err, newUser) => {
+    await models.User.findOneAndUpdate({ _id: userId }, {$addToSet: { 'archived': jobId }, [previousColumnField]: previousColumn }, (err, newUser) => {
       res.locals.user = newUser;
       return next();
     });
