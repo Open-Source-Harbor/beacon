@@ -140,7 +140,7 @@ function JobBoard() {
   }
 
   useEffect(async () => {
-    // await fetchData();
+    await fetchData();
     console.log('jobs', jobs);
   }, []);
 

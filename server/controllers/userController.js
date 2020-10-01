@@ -40,7 +40,7 @@ userController.createUser = async (req, res, next) => {
   try {
     if (!res.locals.user || !res.locals.user.l_id) return next();
     const query = { 'l_id': res.locals.user.l_id }
-    res.locals.user.boards[0] = { name: "Board1" };
+    res.locals.user.boards = [{ name: "Board1" }];
     await User.findOneAndUpdate(query, res.locals.user, {upsert: true}, (err, doc) => {
       if (err) return res.send(500, {error: `error occured in userController.createUser: ${err}`});
       return next();
