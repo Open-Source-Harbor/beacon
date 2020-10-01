@@ -50,8 +50,8 @@ $borderradius2: 12px;
 .header {
   background-image: url('./assets/clouds-white-image3.png');
   background-size: cover;
-  min-height: 10vh;
-  height: 280px;
+  min-height: 7vh;
+  height: 18vh;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -162,6 +162,7 @@ $borderradius2: 12px;
   top: 25%;
   left: 38%;
   background-color: $lightergrey;
+  border: 2px solid black;
   border-radius: 20px;
 }
 
@@ -269,7 +270,9 @@ $borderradius2: 12px;
 
 .mainContainer {
   background-color: $white;
-  min-height: 80vh;
+  // min-height: 80vh;
+  height: 70vh;
+  overflow: scroll;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -292,7 +295,9 @@ $borderradius2: 12px;
 }
 .mainPage {
   // background-color: white;
-  min-height: 70vh;
+  min-height: 60vh;
+  // height: 60vh;
+  // overflow: scroll;
   display: flex;
   // justify-content: center;
   font-size: calc(10px + 2vmin);

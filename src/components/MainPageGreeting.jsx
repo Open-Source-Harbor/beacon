@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect, memo } from 'react';
 
 const MainPageGreeting = (props) => {
   
-  // const [userID, setUserID] = useState('');
+  const [userID, setUserID] = useState('');
   const [name, setName] = useState('');
   const [photo, setPhoto] = useState('');
   const [email, setEmail] = useState('');
@@ -16,7 +16,7 @@ const MainPageGreeting = (props) => {
       .then((user) => {
         console.log("MainPage.jsx fetch /user user: ", user);
         // console.log('user id on fetch in greeting', user._id)
-          props.setUserID(user._id);
+          setUserID(user._id);
           setName(user.firstName);
           setPhoto(user.photo);
           setEmail(user.email);
