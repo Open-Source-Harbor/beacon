@@ -1,6 +1,7 @@
 const cookieController = {};
 
 cookieController.setCookie = (req, res, next) => {
+  console.log('====> cookieController.setCookie first line hit!')
   res.cookie("provider", "linkedin", { httpOnly: true });
   res.cookie("user", res.locals.token, { httpOnly: true });
   return next();
