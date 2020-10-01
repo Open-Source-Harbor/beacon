@@ -1,23 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect, memo } from 'react';
 import Modal from './Modal';
 import JobFeed from './JobFeed';
 import JobBoard from './JobBoard';
 // import ArchiveBoard from './ArchiveBoard';
 
 
-class MainPage extends Component {
-	// constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         modal: false;
-    //     }
-    // }
-    // if (this.state.modal) {
+const MainPage = (props) => {
+  const [name, setName] = useState('');
+  const [photo, setPhoto] = useState('');
 
-    // }
+    useEffect(() => {
+      fetch("http://localhost:8080/api/user")
+        .then(res => res.json())
+        .then(data => {
 
+        })
+        .catch(err => console.log(`error when fetching user data: ${err}`))
+    })
 
-    render () {
+    
         return (
     <div className="mainPage">
         <div className="mainBoard">
@@ -33,7 +34,7 @@ class MainPage extends Component {
         
     </div>
         ); 
-    }  
+    
 }
 
 

@@ -2,32 +2,37 @@ const { models } = require("mongoose");
 const { User } = require("../models/model");
 const userController = {};
 
-userController.verifyUser = async (req, res, next) => {
-  console.log('hi')
-  try {
-    console.log('query', req.query)
-    console.log(req.params.code);
-    console.log('req params ', req.params)
-    const oauthResponse = req.body;
-    console.log('oauth response in verify user', oauthResponse);
+// userController.verifyUser = (req, res, next) => {
+//   console.log('=====> first line of userController.verifyUser hit')
+//   const { provider } = req. cookies;
+//   const token = req.cookies.user;
+//   let decoded;
+//   let email;
 
-    await User.find(oauthResponse, (err, user) => {
-      if (err) return next('err in finding user in verify user', error)
-      if (!user) {
-        console.log('no user found');
-        return next();
-      } else {
-        res.locals.user = user;
-        return next();
-      }
-    })
-  } catch (err) {
-    return next({
-      log: `An error occurred while verifying user: ${err}`,
-      message: { err: "An error occurred in userController.verifyUser. Check server for more details" },
-    });
-  }
-}
+//   try {
+//     console.log('query', req.query)
+//     console.log(req.params.code);
+//     console.log('req params ', req.params)
+//     const oauthResponse = req.body;
+//     console.log('oauth response in verify user', oauthResponse);
+
+//     await User.find(oauthResponse, (err, user) => {
+//       if (err) return next('err in finding user in verify user', error)
+//       if (!user) {
+//         console.log('no user found');
+//         return next();
+//       } else {
+//         res.locals.user = user;
+//         return next();
+//       }
+//     })
+//   } catch (err) {
+//     return next({
+//       log: `An error occurred while verifying user: ${err}`,
+//       message: { err: "An error occurred in userController.verifyUser. Check server for more details" },
+//     });
+//   }
+// }
 
 userController.createUser = async (req, res, next) => {
   try {
@@ -44,6 +49,30 @@ userController.createUser = async (req, res, next) => {
     });
   }
 };
+
+userController.getUser = async (req, res, next) => {
+  try {
+    console.log("IN getUser");
+    const token = req.cookies.user;
+    console.log("token", token);
+
+    const user = await User.findOne({ token: token });
+
+    res.locals.user = user;
+    console.log("res.locals,user", user);
+
+    return next();
+  } catch (err) {
+    return next({
+      log: `An error occurred while fetching dummy user: ${err}`,
+      message: {
+        err:
+          "An error occurred in userController.getDummyUser. Check server for more details",
+      },
+    });
+  }
+};
+
 
 userController.createDummyUser = async (req, res, next) => {
   try {

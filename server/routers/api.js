@@ -3,11 +3,14 @@ const router = express.Router();
 const loginController = require("../controllers/loginController");
 const cookieController = require("../controllers/cookieController");
 const userController = require("../controllers/userController");
-const jobController = require("../controllers/userController");
+const jobController = require("../controllers/jobController");
 require("dotenv").config();
 
+
+
 router.use(
-  "/linkedin**",
+  "/login",
+  cookieController.isLoggedIn,
   loginController.requestToken,
   loginController.getUserNamePhoto,
   loginController.getUserEmail,
@@ -18,8 +21,17 @@ router.use(
   }
 );
 
-router.use("/logout", (req, res) => {
-  return res.redirect("http://localhost:3000");
+router.use("/user", 
+  // userController.verifyUser,
+  userController.getUser,
+  (req, res) => {
+    return res.send(200).json(res.locals.user);
+    // return res.redirect("http://localhost:3000/main");
+  }
+);
+
+router.use("/logout", cookieController.deleteCookie, (req, res) => {
+  return res.redirect("http://localhost:3000/");
 });
 
 // Creates a job for a specific user, and automatically puts in interestedIn column
@@ -74,5 +86,6 @@ jobController.archive,
 (req, res) => {
   return res.status(200).json();
 })
+
 
 module.exports = router;

@@ -2,7 +2,7 @@ const loginController = {};
 const fetch = require('node-fetch')
 require("dotenv").config();
 
-const redirectURI = "http://localhost:8080/api/linkedin"; 
+const redirectURI = "http://localhost:8080/api/login"; 
 
 loginController.requestToken = async (req, res, next) => {
   try {
@@ -62,6 +62,7 @@ loginController.getUserNamePhoto = async (req, res, next) => {
           if (response.firstName) res.locals.user.firstName = response.firstName.localized.en_US;
           if (response.lastName) res.locals.user.lastName = response.lastName.localized.en_US;
           if (response.profilePicture) res.locals.user.photo = response.profilePicture.displayImage;
+          res.locals.user.token = res.locals.token;
           console.log("res.locals.user after first FETCH: ", res.locals.user);
         };
       })

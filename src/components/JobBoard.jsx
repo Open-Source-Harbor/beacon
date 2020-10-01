@@ -102,15 +102,14 @@ function JobBoard() {
   // fetch request to get all board info and jobs for logged in user - NEED TO REDO with new schema
   async function fetchData() {
     const userRequest = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: '5f74a8292a769931c7b7b0eb' }),
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: "5f752f0b337865bfc0168d9b" }),
     };
-    const res = await fetch('http://localhost:8080/getJobs', userRequest);
-    res
-      .json()
-      .then((res) => setJobs(res))
-      .catch((err) => console.log(err));
+    const res = await fetch('http://localhost:8080/api/user', userRequest)
+      .then(res => res.json())
+      .then(data => setJobs(data))
+      .catch((err) => console.log(`error occurred during POST request to add jobBoard: ${err}`));
   }
 
   useEffect(() => {
