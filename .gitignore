@@ -1,7 +1,7 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # CLIENT_ID
-src/components/Secret.js
+src/components/Secrets.js
 
 # project
 .idea/
