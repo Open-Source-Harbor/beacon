@@ -3,6 +3,7 @@ import JobColumn from './JobColumn';
 import Modal from './Modal';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // MOCK DATA - need to replace references to this data with real/fetched data
 const itemsFromBackend = [
@@ -268,29 +269,42 @@ function JobBoard(props) {
                                         borderRadius: "8px",
                                       }}
                                     >
-                                      
                                       <span>
                                         <button
                                           id="clickable"
                                           style={{
-                                            backgroundColor: 'darkblue',
-                                            width: '50px',
-                                            height: '50px',
-                                            borderRadius: '10px',
-                                            marginLeft: '1%'
+                                            backgroundColor: "transparent",
+                                            width: "50px",
+                                            height: "50px",
+                                            borderRadius: "10px",
+                                            marginLeft: "1%",
                                           }}
                                           onClick={(e) => {
                                             // window.alert(e.target.id)
                                             setOpen(true);
                                           }}
                                         >
-                                          
-                                          
+                                          <svg
+                                            width="1.5em"
+                                            height="1.5em"
+                                            viewBox="0 0 16 16"
+                                            class="bi bi-list-ul"
+                                            fill="currentColor"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            boxShadow=""
+                                          >
+                                            <path
+                                              fill-rule="evenodd"
+                                              d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"
+                                            />
+                                          </svg>
                                         </button>
                                       </span>
                                       <div className="jobInfoDisplay">
                                         <p className="jobTitle">{item.title}</p>
-                                        <p className="jobCompany">{item.company}</p>
+                                        <p className="jobCompany">
+                                          {item.company}
+                                        </p>
                                       </div>
                                     </div>
                                   );

@@ -26,6 +26,7 @@ $boxshadow1: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153
 $boxshadow2: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 $boxshadow3: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
 $boxshadow4: 0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12);
+$boxshadow5: 2px 2px 1px 1px rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
 
 
 // Fonts
@@ -74,6 +75,11 @@ $borderradius2: 12px;
   }
 }
 
+#welcomeMessage {
+  font-size: 24px;
+  margin-left: 20px;
+}
+
 .headerButton {
   background: transparent;
   padding: 9px 18px;
@@ -83,6 +89,7 @@ $borderradius2: 12px;
   border: none;
   outline: 0;
   box-shadow: $boxshadow2;
+  margin: 20px;
   &:hover{
     border: none;
     cursor: pointer;
@@ -104,6 +111,11 @@ $borderradius2: 12px;
     outline: 0;
   }
   
+}
+
+#createJob {
+  color: $gblue;
+  font-weight: 400;
 }
 
 #loginButton {
@@ -145,6 +157,15 @@ $borderradius2: 12px;
   font-weight: 400;
 }
 
+.bi-list-ul {
+  box-shadow: $boxshadow5;
+  border-radius: 3px;
+  &:hover {
+    box-shadow: $boxshadow2;
+    cursor: pointer;
+  }
+}
+
 .modal {
   position: absolute;
   top: 5%;
@@ -172,6 +193,8 @@ $borderradius2: 12px;
 
 .mainPageGreeting {
   display: flex;
+  justify-content: center;
+  align-items: center;
   span {
     font-size: 14px;
   }
@@ -207,13 +230,26 @@ $borderradius2: 12px;
           border-radius: $borderradius2;
 
           button {
-            background-color: $gblue;
+            background-color: $ggreen;
             border: none;
-            border-radius: $borderradius1;
+            outline: none;
+            border-radius: 8px;
             color: $white;
             font-size: $fontsize1;
-            height: 40px;
+            height: 60px;
+            padding: 10px;
             margin: 5px;
+
+            &:hover {
+              border: none;
+              outline: none;
+            }
+            
+            &:active {
+              border: none;
+              outline: none;
+            }
+
           }
         }
       }

@@ -78,6 +78,7 @@ class JobFeedElem extends Component {
       jobs.push(
         <div className="jobContainer">
           <button
+            class="jobFeedItems"
             key={`job-${i}`}
             id={`job-${i}`}
             onClick={(e) => {

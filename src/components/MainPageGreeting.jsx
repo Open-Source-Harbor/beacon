@@ -29,7 +29,7 @@ const MainPageGreeting = (props) => {
       <div className="mainPageGreeting">
         <img id="profilePhoto" src={photo}></img>
         <br />
-        <span>Welcome, {name}!</span>
+        <span id="welcomeMessage">Welcome, {name}!</span>
         <br />
       </div>
     );
