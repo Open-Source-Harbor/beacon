@@ -3,6 +3,7 @@ import JobColumn from './JobColumn';
 import Modal from './Modal';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const columnsFromBackend = {
   [uuidv4()]: {
@@ -214,7 +215,7 @@ function JobBoard(props) {
 
   return (
     <div className="jobBoard">
-      <p>Your Job Board</p>
+      <h2>Your Job Board</h2>
       <div className="board">
         <DragDropContext
           onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
@@ -270,43 +271,80 @@ function JobBoard(props) {
                                         justifyContent: "space-between",
                                         alignItems: "center",
                                         backgroundColor: snapshot.isDragging
-                                          ? '#888888'
-                                          : '#3367F9',
-                                        color: 'white',
+                                          ? "#888888"
+                                          : "#3367F9",
+                                        color: "white",
                                         ...provided.draggableProps.style,
-                                        borderRadius: '8px',
+                                        borderRadius: "8px",
                                       }}
                                     >
-                                      <span>
-                                        <button
-                                          id="clickable"
-                                          style={{
-                                            backgroundColor: 'darkblue',
-                                            width: '50px',
-                                            height: '50px',
-                                            borderRadius: '10px',
-                                            marginLeft: '1%'
-                                          }}
-                                          onClick={(e) => {
-                                            setModalJob(item);
-                                            setOpen(true);
-                                          }}
-                                        >
-                                          
-                                          
-                                        </button>
-                                      </span>
-                                      <div className="jobInfoDisplay">
-                                        <p className="jobTitle">{item.title}</p>
-                                        <p className="jobCompany">{item.company}</p>
-                                      </div>
-                                      <div className="divDeleteBtn">
-                                      <button
-                                        id="deleteBtn"
-                                        onClick={(e) => handleDelete(e, item, index, column.dbName)}
-                                      >
-                                        X
-                                      </button>
+                                      <div class="jobContainer">
+                                        <div className="jobInfoDisplay">
+                                          <p className="jobTitle">
+                                            {item.title}
+                                          </p>
+                                          <p className="jobCompany">
+                                            {item.company}
+                                          </p>
+                                        </div>
+                                        <div className="buttonContainer">
+                                          <span>
+                                            <button
+                                              id="clickable"
+                                              style={{
+                                                backgroundColor: "transparent",
+                                                width: "50px",
+                                                height: "50px",
+                                                borderRadius: "10px",
+                                                marginLeft: "1%",
+                                              }}
+                                              onClick={(e) => {
+                                                setModalJob(item);
+                                                setOpen(true);
+                                              }}
+                                            >
+                                              <svg
+                                                width="1.5em"
+                                                height="1.5em"
+                                                viewBox="0 0 16 16"
+                                                class="bi bi-list-ul"
+                                                fill="currentColor"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                              >
+                                                <path
+                                                  fill-rule="evenodd"
+                                                  d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"
+                                                />
+                                              </svg>
+                                            </button>
+                                          </span>
+                                          <button
+                                            id="jobDelete"
+                                            onClick={(e) =>
+                                              handleDelete(
+                                                e,
+                                                item,
+                                                index,
+                                                column.dbName
+                                              )
+                                            }
+                                          >
+                                            <svg
+                                              width="1.5em"
+                                              height="1.5em"
+                                              viewBox="0 0 16 16"
+                                              class="bi bi-trash"
+                                              fill="currentColor"
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                              <path
+                                                fill-rule="evenodd"
+                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                                              />
+                                            </svg>
+                                          </button>
+                                        </div>
                                       </div>
                                     </div>
                                   );

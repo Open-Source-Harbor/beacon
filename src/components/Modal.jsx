@@ -82,19 +82,12 @@ function Modal (props) {
 		return (
 			<div className="modal">
                 <div className="modalHeader"> 
-                    {/* <img alt="coming soon" />  */}
-                         {/* { editMode ? ( */}
                             <div className="modalTitle">
-                            <h1>{job.title}</h1>
-                            <h2>{job.company}</h2>
-                            <h3>{job.location}</h3>
-                            <a href={job.url}>Job Posting</a>
+                            <h2 id="modalTitle">{job.title}</h2>
+                            <h3 id="modalCompany">{job.company}</h3>
+                            <h4 id="modalLocation">{job.location}</h4>
+                            <a id="viewJob" href={job.url}>View Job Posting</a>
                             </div>
-                        {/* ) : (
-                            <div className="modalTitle">
-                                <input type="text"></input>
-                            </div>
-                        )} */}
                     
                 </div>
                 

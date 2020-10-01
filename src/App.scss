@@ -26,6 +26,7 @@ $boxshadow1: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153
 $boxshadow2: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 $boxshadow3: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
 $boxshadow4: 0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12);
+$boxshadow5: 2px 2px 1px 1px rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
 
 
 // Fonts
@@ -74,6 +75,11 @@ $borderradius2: 12px;
   }
 }
 
+#welcomeMessage {
+  font-size: 24px;
+  margin-left: 20px;
+}
+
 .headerButton {
   background: transparent;
   padding: 9px 18px;
@@ -83,6 +89,7 @@ $borderradius2: 12px;
   border: none;
   outline: 0;
   box-shadow: $boxshadow2;
+  margin: 20px;
   &:hover{
     border: none;
     cursor: pointer;
@@ -106,11 +113,45 @@ $borderradius2: 12px;
   
 }
 
+#createJob {
+  color: $gblue;
+  font-weight: 400;
+}
+
 #loginButton {
   color: $mediumgrey;
   &:hover {
     box-shadow: $boxshadow4;
   }
+}
+#modalTitle {
+  margin: 5px;
+  font-size: 32px;
+}
+
+#modalCompany {
+  font-size: 24px;
+  margin: 5px;
+}
+
+#modalLocation {
+  font-size: 18px;
+  margin: 5px;
+}
+
+#viewJob {
+  color: $gblue;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 5px;
+  &:hover {
+    color: $ggreen;
+  }
+}
+
+.inputBoxes {
+  margin-left: 20px;
+  text-align: left;
 }
 
 .createModal {
@@ -135,17 +176,79 @@ $borderradius2: 12px;
 }
 
 #clickable {
-  width: 100px;
-  height: 50px;
   color: $white;
   border: none;
   outline: none;
   background-color: transparent;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 400;
+  padding: 0;
+  margin-right: -10px;
+  &:hover {
+    color: $ggreen;
+    background-color: $white;
+  }
+}
+
+#jobDelete {
+  margin-left: 10px;
+  color: $white;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 200;
+  padding: 0;
+  border-radius: 4px;
+  &:hover {
+    color: red;
+    background-color: $gblue;
+  }
+}
+
+.bi-trash {
+  padding: 5px;
+  box-shadow: $boxshadow5;
+  border-radius: 3px;
+  &:hover {
+    box-shadow: $boxshadow2;
+    cursor: pointer;
+  }
+}
+
+.bi-list-ul {
+  padding: 5px;
+  box-shadow: $boxshadow5;
+  border-radius: 3px;
+  &:hover {
+    box-shadow: $boxshadow2;
+    cursor: pointer;
+    
+    color: $ggreen;
+    background-color: $white;
+  }
+}
+
+.bi-arrow-right-square {
+  font-size: 30px;
+  box-shadow: $boxshadow5;
+  margin-top: -30px;
+  margin-left: 170px;
+  border-radius: 3px;
+  background-color: $ggreen;
+  color: white;
+  &:hover {
+    box-shadow: $boxshadow2;
+    cursor: pointer;
+    
+    color: $ggreen;
+    background-color: $white;
+  }
 }
 
 .modal {
+  display: flex;
+  flex-direction: row;
   position: absolute;
   top: 5%;
   left: 10%;
@@ -153,6 +256,11 @@ $borderradius2: 12px;
   height: 75vh;
   background-color: $white;
   border-radius: 20px;
+  .modalHeader {
+    text-align: left;
+    margin-left: 20px;
+    margin-top: 20px;
+  }
 }
 
 .popup {
@@ -172,6 +280,8 @@ $borderradius2: 12px;
 
 .mainPageGreeting {
   display: flex;
+  justify-content: center;
+  align-items: center;
   span {
     font-size: 14px;
   }
@@ -203,17 +313,42 @@ $borderradius2: 12px;
         flex-direction: column;
 
         .jobContainer {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          // justify-content: flex-start;
+          // align-items: flex-start;
           color: $white;
           border-radius: $borderradius2;
 
-          button {
-            background-color: $gblue;
+          .jobFeedItems {
+            background-color: $ggreen;
+            display: flex;
+            flex-direction: column;
+            justify-items: self-start;
+            // justify-content: space-around;
+            text-align: left;
             border: none;
-            border-radius: $borderradius1;
+            outline: none;
+            border-radius: 8px;
             color: $white;
-            font-size: $fontsize1;
-            height: 40px;
+            font-size: 14px;
+            height: 80px;
+            padding: 10px;
             margin: 5px;
+
+            &:hover {
+              border: none;
+              outline: none;
+              cursor: pointer;
+            }
+            
+            &:active {
+              border: none;
+              outline: none;
+              cursor: pointer;
+            }
+
           }
         }
       }
@@ -256,6 +391,25 @@ $borderradius2: 12px;
     }
   }
 }
+
+.jobContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonContainer {
+  margin-top: -30px;
+  margin-left: 135px;
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+  justify-items: right;
+  justify-content: right;
+  justify-self: self-end;
+  align-items: center;
+}
+
+
 
 .footer {
   background-image: url('./assets/grass-wide.png');
@@ -339,14 +493,25 @@ $borderradius2: 12px;
   margin-left: 3%;
 }
 
+#jobFeedTitle {
+margin-top: 10px;
+}
+
+#jobFeedCompany {
+  font-size: 11px;
+  margin-bottom: 20px;
+}
 p.jobTitle {
-  margin: 3px;
-  font-size: 17px;
+  margin-top: 5px;
+  font-size: 14px;
+  text-align: left;
+  margin-top: 20px;
   // display: inline-block;
 }
 
 p.jobCompany {
   font-size: 11px;
+  text-align: left;
   // display: inline-block;
 }
 
