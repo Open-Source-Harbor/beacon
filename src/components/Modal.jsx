@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ToDo from "./ToDo"
 
-function Modal()  {
+function Modal ({setOpen}) {
 	// constructor(props) {
 	// 	super(props);
     // }
@@ -11,7 +11,7 @@ function Modal()  {
 		return (
 			<div className="modal">
                 <div className="modalHeader"> 
-                    <img alt="coming soon" /> */}
+                    <img alt="coming soon" /> 
                          {/* { editMode ? ( */}
                             <div className="modalTitle">
                                 <h1>Job Title</h1>
@@ -51,6 +51,9 @@ function Modal()  {
                     </div>
                     
 				</div>
+        <div className="close">
+          <button className="closeButton" onClick={() => setOpen(false)}>X</button>
+        </div>
 
 			</div>
 		);
