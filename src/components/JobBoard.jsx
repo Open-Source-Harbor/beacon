@@ -212,7 +212,7 @@ function JobBoard(props) {
                           ref={provided.innerRef}
                           style={{
                             background: snapshot.isDraggingOver
-                              ? "#92E2FD"
+                              ? "#kkkkkk"
                               : "white",
                             padding: 4,
                             width: 250,
@@ -249,7 +249,7 @@ function JobBoard(props) {
                                         margin: "7px",
                                         minHeight: "50px",
                                         backgroundColor: snapshot.isDragging
-                                          ? "#132853"
+                                          ? "#888888"
                                           : "#3367F9",
                                         color: "white",
                                         ...provided.draggableProps.style,
@@ -259,12 +259,10 @@ function JobBoard(props) {
                                       <span>
                                         <button
                                           id="clickable"
-                                          style={{ backgroundColor: "red" }}
                                           onClick={(e) => {
                                             // window.alert(e.target.id)
-                                            setOpen(true)
-                                            }
-                                          }
+                                            setOpen(true);
+                                          }}
                                         >
                                           {item.title}
                                         </button>
@@ -272,14 +270,12 @@ function JobBoard(props) {
                                     </div>
                                   );
                                 }}
-                                
                               </Draggable>
                             );
                           })}
-                          {open ? (<Modal
-                            open={open}
-                            setOpen={setOpen}
-                          ></Modal> ): null}
+                          {open ? (
+                            <Modal open={open} setOpen={setOpen}></Modal>
+                          ) : null}
                           {provided.placeholder}
                         </div>
                       );
