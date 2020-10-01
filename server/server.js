@@ -1,175 +1,57 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-const cors = require('cors');
-const session = require('express-session');
 const cookieParser = require("cookie-parser");
-const bodyParser = require('body-parser');
-const userController = require("./controllers/userController.js");
-const loginController = require("./controllers/loginController.js");
-const cookieController = require("./controllers/cookieController.js");
-const jobController = require("./controllers/jobController.js");
-const { User } = require("./models/model");
-const passport = require('passport');
-const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
-const uuid = require("uuid");
+const bodyParser = require("body-parser");
+const callback = require("./routers/api");
+const logger = require("morgan");
 const PORT = 8080;
+const apiRouter = require("./routers/api");
 
-// LinkedIn 
-const clientSecret = "8pufmbYSk8WPXaog";
-const clientID = "860exmlhesujye";
-const Linkedin = require("node-linkedin")(clientID, clientSecret);
-// const callbackURL = "http://localhost:3000/auth/linkedin/callback"; 
-const callbackURL = "http://192.168.0.28:3000/auth/linkedin/callback"; 
+const cors = require('cors');
+// const session = require('express-session');
 
-const state = uuid.v4().replace(/-/g, '').slice(0, 17);
+// const { ClientCredentials, ResourceOwnerPassword, AuthorizationCode } = require("simple-oauth2");
+// const methodOverride = require('method-override');
+// const userController = require("./controllers/userController.js");
+const loginController = require("./controllers/loginController.js");
+// const cookieController = require("./controllers/cookieController.js");
+// const { User } = require("./models/model");
+// const passport = require('passport');
+// const LinkedInStrategy = require('passport-linkedin').Strategy;
+// const uuid = require("uuid");
+
+
+// // LinkedIn 
+// const baseURI = "https://www.linkedin.com/oauth/v2/authorization";
+// const clientSecret = "8pufmbYSk8WPXaog";
+// const clientID = "860exmlhesujye";
+// // const redirectURI = "http://localhost:3000/home"; 
+// const redirectURI = "http://192.168.0.28:3000/callback"; 
+// const state = uuid.v4().replace(/-/g, "").slice(0, 17);
+// const scope = "r_liteprofile%20r_emailaddress";
+// const authorizationURI = `${baseURI}?response_type=code&client_id=${clientID}&redirect_uri=${redirectURI}&state=${state}&scope=${scope}`;
+
+// const Linkedin = require("node-linkedin")(clientID, clientSecret);
+// // const callbackURL = "http://localhost:3000/auth/linkedin/callback"; 
+// const callbackURL = "http://192.168.0.28:3000/auth/linkedin/callback"; 
 
 app.use(cors());
+// app.use(express.static(path.resolve(__dirname, "public")));
+app.use(logger("dev"));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Creates a job for a specific user, and automatically puts in interestedIn column
-// INPUT => 
-// {
-//   "newJob": {
-//     ...
-//   },
-//   "userId": "..."
-// }
-app.post('/createJob',
-jobController.createJob,
-(req, res) => {
-  return res.status(200).json(res.locals.job)
-})
+// API ROUTER
+app.use('/api', apiRouter)
 
-// Fetches all jobs for one user
-// INPUT => "userId"
-app.post('/getJobs',
-userController.getDummyUser,
-jobController.getJobs,
-(req, res) => {
-  return res.status(200).json(res.locals.jobs)
-})
+// SERVES INDEX.HTML FILE ON ROUTE '/'
+// app.get("/", (req, res) =>
+//   res.status(200).sendFile(path.resolve(__dirname, "../public/index.html"))
+// );
 
-// Creates a user
-// INPUT is whatever fields from the User Model that you want to input
-app.post('/createUser',
-userController.createDummyUser,
-(req, res) => {
-  return res.status(200).json(res.locals.user)
-})
-
-// fetches all info on user
-// INPUT => "userId"
-app.post('/getUser', 
-userController.getDummyUser,
-(req, res) => {
-  return res.status(200).json(res.locals.user);
-})
-
-app.post('/moveJob',
-jobController.moveJob,
-(req, res) => {
-  return res.status(200).json({ user: res.locals.user, job: res.locals.job })
-})
-
-// extra from jsonworld
-// app.use(session({ 
-//   secret: uuid.v4().slice(0,5),
-//   resave: true,
-//   saveUninitialized: true
-// }))
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// passport.serializeUser(function (user, done) {
-//   done(null, user);
-// });
-
-// extra from jsonworld
-// passport.deserializeUser(function (id, done) {
-//   User.findById(id, function (err, user) {
-//     done(err, user);
-//   });
-// });
-
-// passport.use(new LinkedInStrategy ({
-//   clientID: clientID,
-//   clientSecret: clientSecret,
-//   callbackURL: callbackURL,
-//   scope: ['r_emailaddress', 'r_liteprofile'],
-//   state: true,
-//   passReqToCallback: true
-// }, (req, accessToken, refreshToken, profile, done) => {
-//   req.session.accessToken = accessToken; // Access token is now saved in req.session.accesstoken variable
-//   process.nextTick(() => done(null, profile));
-// }));
-
-// app.use((req, res) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader("Access-Control-Allow-Methods", "*");
-//   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   res.end();
-// });
-
-// app.use('/auth/linkedin', passport.authenticate('linkedin', (req, res) => {
-//   // Request will be redirected to LinkedIn for authentication, so function will not be called
-//   console.log('Request redirected');
-// }));
-
-// app.use('/auth/linkedin/callback', passport.authenticate('linkedin', { failureRedirect: '/' }), 
-// (req, res) => res.redirect('/'))
-
-app.use("/logout", function (req, res) {
-  req.logout();
-  return res.redirect("/");
-});
-
-
-app.use("/", (req, res) =>
-  res.status(200).sendFile(path.resolve(__dirname, "../public/index.html"))
-);
-
-// app.use('/login', 
-//   loginController.oAuth, 
-  // loginController.fake,
-  // (req, res) => {
-    // Linkedin.auth.getAccessToken(res, req.query.code, req.query.state, (err, res) => {
-    //   if (err) return console.error(err);
-    //   console.log({res});
-    //   return res.redirect('/home')
-    // })
-  //   return res.status(200).json('success');
-  // });
-
-// app.use('/logout', 
-// cookieController.deleteCookie, 
-// (req, res) => { 
-//   return res.status(200).redirect('/')
-// });
-
-// app.use('/home', (req, res) => console.log('WHAT UP!'))
-
-// app.use('/home',
-// loginController.fake,
-// userController.verifyUser,
-// userController.createUser,
-// (req, res) => {
-//   return res.status(200).json(res.locals.user)
-// })
-
-// app.use('/newJob', (req, res) => {
-//   return res.status(200).json(res.locals.job);
-// })
-
-// app.use('/moveJob', (req, res) => {
-//   return res.status(200).json(res.locals.job) // CHANGE
-// })
-
-
-
+app.use((req, res) => res.sendStatus(404));
 
 app.use((err, req, res, next) => {
   const defaultErr = {
