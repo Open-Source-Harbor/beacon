@@ -94,7 +94,8 @@ const onDragEnd = (result, columns, setColumns) => {
   }
 };
 
-function JobBoard() {
+function JobBoard(props) {
+  const { newJobAdded } = props;
   const [columns, setColumns] = useState(columnsFromBackend);
   console.log('columns in jobboard', columns);
   const [jobs, setJobs] = useState({});

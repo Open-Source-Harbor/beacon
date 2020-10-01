@@ -6,7 +6,7 @@ import CreateModal from '../components/CreateModal.jsx'
 import '../App.scss';
 
 function App() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
   const [fields, setFields] = React.useState({
     title: '',
     company: '',
@@ -52,7 +52,7 @@ function App() {
         <CreateModal handleChange={handleChange} handleSubmit={handleSubmit}/>
       ) : null}
       <Header openModal={setOpen}/>
-      <Main />
+      <Main newJobAdded={open}/>
       <Footer />
     </div>
   );

@@ -6,12 +6,12 @@ import JobBoard from './JobBoard';
 
 
 class MainPage extends Component {
-	// constructor(props) {
-    //     super(props);
+	constructor(props) {
+        super(props);
     //     this.state = {
     //         modal: false;
     //     }
-    // }
+    }
     // if (this.state.modal) {
 
     // }
@@ -22,7 +22,7 @@ class MainPage extends Component {
     <div className="mainPage">
         <div className="mainBoard">
             <JobFeed />
-            <JobBoard />
+            <JobBoard newJobAdded={this.props.newJobAdded}/>
         </div>
         {/* <div className="showArchive">
             <ArchiveBoard />
