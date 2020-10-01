@@ -42,9 +42,9 @@ class JobFeedElem extends Component {
 
     const fields = {
       title: job.title,
-      company: '',
-      location: '',
-      postURL: '',
+      company: job.company.display_name,
+      location: job.location.display_name,
+      postURL: job.redirect_url,
     };
 
     async function addJob() {

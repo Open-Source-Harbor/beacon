@@ -252,7 +252,8 @@ function JobBoard(props) {
                                         borderRadius: '8px'
                                       }}
                                     >
-                                      {item.title}
+                                      <p className="jobTitle">{item.title}</p>
+                                      <p className="jobCompany">{item.company}</p>
                                     </div>
                                   );
                                 }}
