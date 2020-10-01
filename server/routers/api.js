@@ -108,7 +108,9 @@ router.post('/archive',
 jobController.archive,
 (req, res) => {
   return res.status(200).json();
-})
+  })
+
+  router.post('/addJob')
 
 
 module.exports = router;

@@ -14,7 +14,7 @@ class MainPage extends Component  {
             <div className="mainBoard">
               <JobFeed />
               <JobBoard />
-              <Chatroom />
+              {/* <Chatroom /> */}
             </div>
             {/* <div className="showArchive">
             <ArchiveBoard />
