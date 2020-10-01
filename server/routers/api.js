@@ -1,10 +1,10 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const loginController = require("../controllers/loginController");
-const cookieController = require("../controllers/cookieController");
-const userController = require("../controllers/userController");
-const jobController = require("../controllers/jobController");
-require("dotenv").config();
+const loginController = require('../controllers/loginController');
+const cookieController = require('../controllers/cookieController');
+const userController = require('../controllers/userController');
+const jobController = require('../controllers/jobController');
+require('dotenv').config();
 
 // router.use(
 //   "/auth",
@@ -30,7 +30,7 @@ require("dotenv").config();
 // );
 
 router.use(
-  "/login",
+  '/login',
   loginController.isLoggedIn,
   loginController.requestToken,
   loginController.getUserNamePhoto,
@@ -38,79 +38,70 @@ router.use(
   cookieController.setCookie,
   userController.createUser,
   (req, res) => {
-    return res.redirect("http://localhost:3000/main");
+    return res.redirect('http://localhost:3000/main');
   }
 );
 
-router.use("/user", userController.getUser,(req, res) => {
-    return res.status(200).json(res.locals.user);
-    // return res.redirect("http://localhost:3000/main");
-  }
-);
+router.use('/user', userController.getUser, (req, res) => {
+  return res.status(200).json(res.locals.user);
+  // return res.redirect("http://localhost:3000/main");
+});
 
-router.use("/feed", jobController.getFeed, (req, res) => {
+router.use('/feed', jobController.getFeed, (req, res) => {
   return res.status(200).json(res.locals.feed);
   // return res.redirect("http://localhost:3000/main");
 });
 
-router.use("/logout", cookieController.deleteCookie, (req, res) => {
-  return res.redirect("http://localhost:3000/");
+router.use('/logout', cookieController.deleteCookie, (req, res) => {
+  return res.redirect('http://localhost:3000/');
 });
 
 // Creates a job for a specific user, and automatically puts in interestedIn column
-// INPUT => 
+// INPUT =>
 // {
 //   "newJob": {
 //     ...
 //   },
 //   "userId": "..."
 // }
-router.post('/createJob',
-jobController.createJob,
-(req, res) => {
-  return res.status(200).json(res.locals.job)
-})
+router.post('/createJob', jobController.createJob, (req, res) => {
+  return res.status(200).json(res.locals.job);
+});
 
 // Fetches all jobs for one user
 // INPUT => "userId"
-router.post('/getJobs',
-userController.getDummyUser,
-jobController.getJobs,
-(req, res) => {
-  return res.status(200).json(res.locals.jobs)
-})
+router.post(
+  '/getJobs',
+  userController.getDummyUser,
+  jobController.getJobs,
+  (req, res) => {
+    return res.status(200).json(res.locals.jobs);
+  }
+);
 
 // Creates a user
 // INPUT is whatever fields from the User Model that you want to input
-router.post('/createUser',
-userController.createDummyUser,
-(req, res) => {
-  return res.status(200).json(res.locals.user)
-})
+router.post('/createUser', userController.createDummyUser, (req, res) => {
+  return res.status(200).json(res.locals.user);
+});
 
 // fetches all info on user
 // INPUT => "userId"
-router.post('/getUser', 
-userController.getDummyUser,
-(req, res) => {
+router.post('/getUser', userController.getDummyUser, (req, res) => {
   return res.status(200).json(res.locals.user);
-})
+});
 
 // moves job between columns in database
 // INPUT => a shit ton...
-router.post('/moveJob',
-jobController.moveJob,
-(req, res) => {
-  return res.status(200).json({ user: res.locals.user, job: res.locals.job })
-})
+router.post('/moveJob', jobController.moveJob, (req, res) => {
+  return res.status(200).json({ user: res.locals.user, job: res.locals.job });
+});
 
-router.post('/archive',
-jobController.archive,
-(req, res) => {
+router.post('/archive', jobController.archive, (req, res) => {
   return res.status(200).json();
-  })
+});
 
-router.delete('/:id', jobController.deleteJob, (req, res) => {
+router.post('/:id', jobController.deleteJob, (req, res) => {
   return res.sendStatus(200);
 });
 

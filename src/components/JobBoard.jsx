@@ -122,17 +122,26 @@ const onDragEnd = async (result, columns, setColumns) => {
   }
 };
 
-const handleDelete = (e, job) => {
+const handleDelete = (e, job, idx, column) => {
   const jobId = job._id;
+  console.log('column db', column)
   console.log('jobId', jobId);
-  console.log('e', e.target);
+  console.log('e parent', e.target.parentNode);
+  console.log('index', idx)
   fetch(`/api/${jobId}`, {
-    method: 'DELETE',
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      userId: '5f75e7b2d3a398548e7addf1',
+      column: column,
+      index: idx
+    }),
   })
+    .then((res) => res.json())
     .then((response) => {
       if (response.status === 200) {
-      let post = document.getElementById(`${jobId}`);
-      post.remove();
+        let post = document.getElementById(`${jobId}`);
+        post.remove();
       }
     })
     .catch((err) => console.log(err));
@@ -257,7 +266,7 @@ function JobBoard(props) {
                                       }}
                                     >
                                       <button
-                                        onClick={(e) => handleDelete(e, item)}
+                                        onClick={(e) => handleDelete(e, item, index, column.dbName)}
                                       >
                                         X
                                       </button>
