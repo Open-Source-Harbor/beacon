@@ -47,7 +47,7 @@ jobController.getFeed = async (req, res, next) => {
 
 jobController.getJobs = async (req, res, next) => {
   try {
-    // console.log('IN getJobs', )
+    console.log('IN getJobs', res.locals.user)
     const user = res.locals.user;
     const board1 = user.boards[0];
     const archivedIDs = user.archived;
@@ -82,7 +82,7 @@ jobController.getJobs = async (req, res, next) => {
       archived
     }
 
-    // console.log('entire board!!', board);
+    console.log('entire board!!', board);
 
     res.locals.jobs = board;
     return next();

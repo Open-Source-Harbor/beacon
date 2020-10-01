@@ -9,13 +9,14 @@ import MainPageGreeting from '../components/MainPageGreeting.jsx';
 // const history = useHistory()
 
 function Main(props) {
+  const [userID, setUserID] = React.useState('5f75e7b2d3a398548e7addf1');
+
   return (
     <div className="mainContainer">
       <Switch>
-        <Route exact path="/main">
-            {/* {history.go(0)} */}
-            <MainPageGreeting />
-            <MainPage newJobAdded={props.newJobAdded}/>
+        <Route path="/main">
+            <MainPageGreeting setUserID={setUserID} />
+            <MainPage userId={userID} newJobAdded={props.newJobAdded}/>
         </Route>
         <Route exact path="/">
             <HomePage />
