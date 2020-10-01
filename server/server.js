@@ -6,6 +6,9 @@ const logger = require("morgan");
 const PORT = 8080;
 const apiRouter = require("./routers/api");
 
+const jobController = require('./controllers/jobController');
+const userController = require('./controllers/userController');
+
 const cors = require('cors');
 
 app.use(cors());
