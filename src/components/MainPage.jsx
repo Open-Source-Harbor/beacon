@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect, memo } from 'react';
 import Modal from './Modal';
 import JobFeed from './JobFeed';
 import JobBoard from './JobBoard';
+import Chatroom from "./Chatroom";
 // import ArchiveBoard from './ArchiveBoard';
 
 
@@ -27,13 +28,12 @@ class MainPage extends Component {
         {/* <div className="showArchive">
             <ArchiveBoard />
         </div>         */}
-        <div className="showModal">
-            <Modal />
-        </div>
-        
-    </div>
+            <div className="showModal">
+              <Modal />
+            </div>
+          </div>
         ); 
-    }  
+      }
 }
 
 

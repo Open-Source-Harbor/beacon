@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+require("dotenv").config();
 
-const MONGO_URI = "mongodb+srv://beacon:beacon@beacon-0.bfq4r.mongodb.net/beacon?retryWrites=true&w=majority";
+const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI, {
 	// options for the connect method to parse the URI
@@ -19,6 +20,7 @@ const userSchema = new Schema({
   lastName: { type: String, required: true },
   photo: { type: String, required: true },
   email: { type: String, required: true },
+  token: { type: String, required: true },
   boards: [
     {
       name: { type: String, default: "Board1" },
