@@ -3,6 +3,7 @@ import JobColumn from './JobColumn';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
+// MOCK DATA - need to replace references to this data with real/fetched data
 const itemsFromBackend = [
   { id: uuidv4(), name: 'First Job' },
   { id: uuidv4(), name: 'Second Job' },
@@ -30,12 +31,14 @@ const columnsFromBackend = {
   },
 };
 
+// function to update columns after dragging job post
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
   const { source, destination } = result;
   console.log('source', source);
   console.log('destination', destination);
 
+  // post is moved to a different column/category
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = columns[source.droppableId];
     const destColumn = columns[destination.droppableId];
@@ -54,6 +57,8 @@ const onDragEnd = (result, columns, setColumns) => {
         items: destItems,
       },
     });
+
+    // post is moved to a different position within the same category
   } else {
     const column = columns[source.droppableId];
     const copiedItems = [...column.items];
