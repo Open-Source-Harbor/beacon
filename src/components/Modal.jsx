@@ -1,22 +1,66 @@
 import React, { Component } from 'react';
 import ToDo from "./ToDo"
 
-function Modal ({setOpen}) {
-	// constructor(props) {
-	// 	super(props);
-    // }
-    // const [editMode, setEditMode] = React.useState(true);
+function Modal (props) {
+
+    const { setOpen, job } = props;
+    const [notes, setNotes] = React.useState([]);
+
+    // React.useEffect(() => {
+    //     setNotes(job)
+    // })
+    
+    //   const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     saveJob();
+    //     setOpen(false); // Close modal on submit
+    //   }
+    
+    //   const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setFields({
+    //       ...fields,
+    //       [name]: value,
+    //     });
+    //   }
+    
+    //   const saveJob = async () => {
+    //     const response = await fetch('/api/createJob', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify({ newJob: fields, userId: '5f75e7b2d3a398548e7addf1' })
+    //     })
+    //     const parsedResp = response.json();
+    
+    //     setFields({
+    //       title: '',
+    //       company: '',
+    //       location: '',
+    //       postURL: '',
+    //     })
+    
+    //     window.location.reload();
+    //     setNewJobAdded(!newJobAdded);
+    //   }
+
+
+
+
+    // console.log('did the job come through in modal??', job)
 
 	// render() {
 		return (
 			<div className="modal">
                 <div className="modalHeader"> 
-                    <img alt="coming soon" /> 
+                    {/* <img alt="coming soon" />  */}
                          {/* { editMode ? ( */}
                             <div className="modalTitle">
-                                <h1>Job Title</h1>
-                                <h2>Company</h2>
-                                <h3>Location</h3>
+                            <h1>{job.title}</h1>
+                            <h2>{job.company}</h2>
+                            <h3>{job.location}</h3>
+                            <a href={job.url}>Job Posting</a>
                             </div>
                         {/* ) : (
                             <div className="modalTitle">
@@ -50,7 +94,9 @@ function Modal ({setOpen}) {
                         <span>Interviews </span>
                         
                     </div> */}
-                    
+                    {job.notes.map(note => {
+                        return <div>{note}</div>
+                    })}
 				</div>
         <div className="close">
           <button className="closeButton" onClick={() => setOpen(false)}>X</button>

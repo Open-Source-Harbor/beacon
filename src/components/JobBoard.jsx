@@ -154,6 +154,7 @@ function JobBoard(props) {
   const [jobs, setJobs] = useState({});
   const [open, setOpen] = useState(false);
   const [display, setDisplay] = useState('none');
+  const [modalJob, setModalJob] = useState({});
 
   // fetch request to get all board info and jobs for logged in user - NEED TO REDO with new schema
   async function fetchData() {
@@ -266,7 +267,7 @@ function JobBoard(props) {
                                         margin: "7px",
                                         minHeight: "50px",
                                         display: "flex",
-                                        justifyContent: "start",
+                                        justifyContent: "space-between",
                                         alignItems: "center",
                                         backgroundColor: snapshot.isDragging
                                           ? '#888888'
@@ -276,11 +277,6 @@ function JobBoard(props) {
                                         borderRadius: '8px',
                                       }}
                                     >
-                                      <button
-                                        onClick={(e) => handleDelete(e, item, index, column.dbName)}
-                                      >
-                                        X
-                                      </button>
                                       <span>
                                         <button
                                           id="clickable"
@@ -292,7 +288,7 @@ function JobBoard(props) {
                                             marginLeft: '1%'
                                           }}
                                           onClick={(e) => {
-                                            // window.alert(e.target.id)
+                                            setModalJob(item);
                                             setOpen(true);
                                           }}
                                         >
@@ -304,6 +300,14 @@ function JobBoard(props) {
                                         <p className="jobTitle">{item.title}</p>
                                         <p className="jobCompany">{item.company}</p>
                                       </div>
+                                      <div className="divDeleteBtn">
+                                      <button
+                                        id="deleteBtn"
+                                        onClick={(e) => handleDelete(e, item, index, column.dbName)}
+                                      >
+                                        X
+                                      </button>
+                                      </div>
                                     </div>
                                   );
                                 }}
@@ -311,7 +315,7 @@ function JobBoard(props) {
                             );
                           })}
                           {open ? (
-                            <Modal open={open} setOpen={setOpen}></Modal>
+                            <Modal open={open} setOpen={setOpen} job={modalJob}></Modal>
                           ) : null}
                           {provided.placeholder}
                         </div>
