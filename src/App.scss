@@ -349,3 +349,14 @@ p.jobCompany {
   font-size: 11px;
   // display: inline-block;
 }
+
+.divDeleteBtn {
+  display: flex;
+  align-items: "start";
+  height: 100%;
+}
+
+#deleteBtn {
+  background-color: rgb(190, 0, 0);
+  color: white;
+}

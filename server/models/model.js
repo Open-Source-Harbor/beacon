@@ -69,7 +69,7 @@ const jobSchema = new Schema({
   // columnIndex: Number,
   // logo: String, ??
   // salary: Number, ??
-  notes: String,
+  notes: [String],
   todo: [{
     name: String,
     date: Date,

@@ -47,7 +47,7 @@ class JobFeedElem extends Component {
         .replace(/engineer.*$/gim, 'Engineer'),
         company: job.company.display_name,
         location: job.location.display_name,
-        postURL: job.redirect_url,
+        url: job.redirect_url,
     };
 
     console.log('feed job fields', fields);
