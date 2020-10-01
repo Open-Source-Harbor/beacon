@@ -101,6 +101,10 @@ router.post('/archive', jobController.archive, (req, res) => {
   return res.status(200).json();
 });
 
+router.post('/addNote', jobController.addLongNote, (req, res) => {
+  return res.status(200).json(res.locals.job);
+})
+
 router.post('/:id', jobController.deleteJob, (req, res) => {
   return res.sendStatus(200);
 });
