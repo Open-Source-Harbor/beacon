@@ -332,3 +332,20 @@ $borderradius2: 12px;
     transform: rotate(360deg);
   }
 } */
+
+.jobInfoDisplay {
+  display: inline-block;
+  margin-right: 1%;
+  margin-left: 3%;
+}
+
+p.jobTitle {
+  margin: 3px;
+  font-size: 17px;
+  // display: inline-block;
+}
+
+p.jobCompany {
+  font-size: 11px;
+  // display: inline-block;
+}

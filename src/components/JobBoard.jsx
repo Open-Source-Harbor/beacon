@@ -63,13 +63,13 @@ const onDragEnd = async (result, columns, setColumns) => {
       },
     });
 
-    console.log('HEY removed: ', removed)
-    console.log('HEY sourceColumn', sourceColumn);
-    console.log('source.droppableId', source.droppableId);
-    console.log('destination col', destColumn);
-    console.log('destination...', destination.droppableId);
+    // console.log('HEY removed: ', removed)
+    // console.log('HEY sourceColumn', sourceColumn);
+    // console.log('source.droppableId', source.droppableId);
+    // console.log('destination col', destColumn);
+    // console.log('destination...', destination.droppableId);
 
-    console.log('indices', destination.index, source.index)
+    // console.log('indices', destination.index, source.index)
 
     // beginning skeleton for posting changes to server after drag event. NEEDS WORK
     async function fetchData() {
@@ -130,7 +130,7 @@ const onDragEnd = async (result, columns, setColumns) => {
 };
 
 function JobBoard(props) {
-  const { newJobAdded } = props;
+  const { userId } = props;
   const [columns, setColumns] = useState(columnsFromBackend);
   console.log("columns in jobboard", columns);
   const [jobs, setJobs] = useState({});
@@ -139,16 +139,24 @@ function JobBoard(props) {
 
   // fetch request to get all board info and jobs for logged in user - NEED TO REDO with new schema
   async function fetchData() {
+
+    console.log('userId in fetch data ', userId)
+    try{
     const userRequest = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: "5f75e7b2d3a398548e7addf1" }),
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId }),
+      // body: JSON.stringify({ userId: "5f75e7b2d3a398548e7addf1" }),
     };
     const res = await fetch("/api/getJobs", userRequest);
     const parsed = await res.json();
 
     await setJobs(parsed);
-    renderJobs(parsed);
+    console.log('setJobs with new userid', parsed, userId)
+    renderJobs(parsed)
+  } catch (err) {
+    console.log('job board post fetch problem ', err)
+  }
   }
 
   async function renderJobs(parsed) {
@@ -181,6 +189,7 @@ function JobBoard(props) {
   }
 
   useEffect(async () => {
+    console.log('we need USSER ID', userId)
     await fetchData();
     console.log("jobs", jobs);
   }, []);
@@ -245,9 +254,12 @@ function JobBoard(props) {
                                       {...provided.dragHandleProps}
                                       style={{
                                         userSelect: "none",
-                                        padding: 16,
+                                        padding: 4,
                                         margin: "7px",
                                         minHeight: "50px",
+                                        display: "flex",
+                                        justifyContent: "start",
+                                        alignItems: "center",
                                         backgroundColor: snapshot.isDragging
                                           ? "#888888"
                                           : "#3367F9",
@@ -256,17 +268,30 @@ function JobBoard(props) {
                                         borderRadius: "8px",
                                       }}
                                     >
+                                      
                                       <span>
                                         <button
                                           id="clickable"
+                                          style={{
+                                            backgroundColor: 'darkblue',
+                                            width: '50px',
+                                            height: '50px',
+                                            borderRadius: '10px',
+                                            marginLeft: '1%'
+                                          }}
                                           onClick={(e) => {
                                             // window.alert(e.target.id)
                                             setOpen(true);
                                           }}
                                         >
-                                          {item.title}
+                                          
+                                          
                                         </button>
                                       </span>
+                                      <div className="jobInfoDisplay">
+                                        <p className="jobTitle">{item.title}</p>
+                                        <p className="jobCompany">{item.company}</p>
+                                      </div>
                                     </div>
                                   );
                                 }}
