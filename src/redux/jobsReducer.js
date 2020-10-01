@@ -48,14 +48,14 @@ const jobsReducer = (state = initialState, action) => {
 			};
 
 		//EXAMPLES
-		case types.MOVE_JOB:
-			//need the payload to include the index and current board
-			let newBoard = state.boards.slice() 
-			// cut then paste into new column
-			return {
-				...state,
-				boards: newBoard,
-			};
+		// case types.MOVE_JOB:
+		// 	//need the payload to include the index and current board
+		// 	let newBoard = state.boards.slice() 
+		// 	// cut then paste into new column
+		// 	return {
+		// 		...state,
+		// 		boards: newBoard,
+		// 	};
 		// case types.ADD_CARD:
 
 		// case types.DELETE_CARD:
