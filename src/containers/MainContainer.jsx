@@ -1,16 +1,19 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { useHistory } from 'react-router'
 
 import HomePage from '../components/HomePage.jsx'
 import MainPage from '../components/MainPage.jsx'
 import MainPageGreeting from '../components/MainPageGreeting.jsx';
 
+const history = useHistory()
 
 function Main() {
   return (
     <div className="mainContainer">
       <Switch>
-        <Route path="/main">
+        <Route exact path="/main">
+            {history.go(0)}
             <MainPageGreeting />
             <MainPage />
         </Route>
