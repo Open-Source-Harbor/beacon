@@ -201,4 +201,18 @@ jobController.archive = async (req, res, next) => {
   }
 }
 
+jobController.deleteJob = async (req, res, next) => {
+  try {
+    console.log('req.params', req.params.id);
+    const { id } = req.params;
+    await Task.deleteOne({ _id: id });
+    return next();
+  } catch (err) {
+    return next({
+      log: `An error occurred in deleteTask ${err}`,
+      message: { err: 'An error occurred, check server for more details' },
+    });
+  }
+};
+
 module.exports = jobController;

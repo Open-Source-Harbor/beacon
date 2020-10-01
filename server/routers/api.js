@@ -110,4 +110,8 @@ jobController.archive,
   return res.status(200).json();
   })
 
+router.delete('/:id', jobController.deleteJob, (req, res) => {
+  return res.sendStatus(200);
+});
+
 module.exports = router;
