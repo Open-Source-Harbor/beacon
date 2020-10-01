@@ -69,10 +69,18 @@ userController.getDummyUser,
   return res.status(200).json(res.locals.user);
 })
 
+// moves job between columns in database
+// INPUT => a shit ton...
 app.post('/moveJob',
 jobController.moveJob,
 (req, res) => {
   return res.status(200).json({ user: res.locals.user, job: res.locals.job })
+})
+
+app.post('/archive',
+jobController.archive,
+(req, res) => {
+  return res.status(200).json();
 })
 
 // extra from jsonworld

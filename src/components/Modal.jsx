@@ -1,21 +1,29 @@
 import React, { Component } from 'react';
 import ToDo from "./ToDo"
 
-class Modal extends Component {
+function Modal()  {
 	// constructor(props) {
 	// 	super(props);
-	// }
+    // }
+    // const [editMode, setEditMode] = React.useState(false);
 
-	render() {
+	// render() {
 		return (
 			<div className="modal">
                 <div className="modalHeader"> 
-                    {/* <img alt="coming soon" /> */}
-                    <div className="modalTitle">                
-                        <h1>Job Title</h1>
-                        <h2>Company</h2>
-                        <h3>Location</h3>
-                    </div>
+                    <img alt="coming soon" /> */}
+                         {/* { editMode ? ( */}
+                            <div className="modalTitle">
+                                <h1>Job Title</h1>
+                                <h2>Company</h2>
+                                <h3>Location</h3>
+                            </div>
+                        {/* ) : (
+                            <div className="modalTitle">
+                                <input type="text"></input>
+                            </div>
+                        )} */}
+                    
                 </div>
                 
 				<div className="inputBoxes">
@@ -46,7 +54,7 @@ class Modal extends Component {
 
 			</div>
 		);
-	}
+	// }
 }
 
 export default Modal;

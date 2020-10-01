@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import Modal from './Modal';
+import Modal from './Modal';
 import JobFeed from './JobFeed';
 import JobBoard from './JobBoard';
 // import ArchiveBoard from './ArchiveBoard';
@@ -7,8 +7,16 @@ import JobBoard from './JobBoard';
 
 class MainPage extends Component {
 	// constructor(props) {
-	// 	super(props);
+    //     super(props);
+    //     this.state = {
+    //         modal: false;
+    //     }
     // }
+    // if (this.state.modal) {
+
+    // }
+
+
     render () {
         return (
     <div className="mainPage">
@@ -20,7 +28,7 @@ class MainPage extends Component {
             <ArchiveBoard />
         </div>         */}
         <div className="showModal">
-            {/* <Modal /> */}
+            <Modal />
         </div>
         
     </div>
