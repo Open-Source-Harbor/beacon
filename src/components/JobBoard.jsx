@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import JobColumn from './JobColumn';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
@@ -54,6 +54,28 @@ const onDragEnd = (result, columns, setColumns) => {
         items: destItems,
       },
     });
+
+    async function fetchData() {
+      const moved = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: '5f752731337865bfc01369fa',
+          // jobId: ,
+          // prevCol: ,
+          // prevIndex: ,
+          // newCol: ,
+          // newIndex: ,
+          // boardIndex: ,
+        }),
+      };
+      const res = await fetch('http://localhost:8080/moveJob', moved);
+      res
+        .json()
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
+    
   } else {
     const column = columns[source.droppableId];
     const copiedItems = [...column.items];
@@ -72,9 +94,29 @@ const onDragEnd = (result, columns, setColumns) => {
 function JobBoard() {
   const [columns, setColumns] = useState(columnsFromBackend);
   console.log('columns in jobboard', columns);
+  const [jobs, setJobs] = useState({});
+
   // constructor(props) {
   // 	super(props);
   // }
+
+  async function fetchData() {
+    const userRequest = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: '5f74a8292a769931c7b7b0eb'}),
+    };
+    const res = await fetch('http://localhost:8080/getJobs', userRequest);
+    res
+      .json()
+      .then((res) => setJobs(res))
+      .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    fetchData();
+    console.log('jobs', jobs);
+  }, []);
 
   // render() {
   return (
