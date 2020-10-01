@@ -80,25 +80,49 @@ function Modal (props) {
 
 	// render() {
 		return (
-			<div className="modal">
-                <div className="modalHeader"> 
-                            <div className="modalTitle">
-                            <h2 id="modalTitle">{job.title}</h2>
-                            <h3 id="modalCompany">{job.company}</h3>
-                            <h4 id="modalLocation">{job.location}</h4>
-                            <a id="viewJob" href={job.url}>View Job Posting</a>
-                            </div>
-                    
-                </div>
-                
-				<div className="inputBoxes">
-                    <form>
-                        <div>
-                            <p>Notes </p>
-                            <textarea id="textareaNote" rows="10" cols="50" value={longNote} onChange={handleChange}/>
-                            <input id="inputNote" type="submit" value="Save" onClick={handleSubmit}/>
-                        </div>
-                        {/* <div>
+      <div className="modal">
+        <div className="modalHeader">
+          <div className="modalTitle">
+            <h2 id="modalTitle">
+              {job.title}
+              <span className="close">
+                <button className="closeButton" onClick={() => setOpen(false)}>
+                  X
+                </button>
+              </span>
+            </h2>
+
+            <h3 id="modalCompany">{job.company}</h3>
+            <h4 id="modalLocation">{job.location}</h4>
+            <a id="viewJob" href={job.url}>
+              View Job Posting
+            </a>
+          </div>
+        </div>
+
+        <div className="inputBoxes">
+          <form>
+            <div className="modalButtonContainer">
+              <h2 id="modalNotes">Notes </h2>
+              <textarea
+                id="textareaNote"
+                rows="10"
+                cols="50"
+                value={longNote}
+                onChange={handleChange}
+              />
+              <input
+                id="inputNote"
+                type="submit"
+                value="Save"
+                onClick={() => {
+                  handleSubmit();
+                  setOpen(false);
+                }}
+              />
+            </div>
+
+            {/* <div>
                         <span>Salary </span>
                             <input type="text"/>
                         </div>
@@ -106,25 +130,21 @@ function Modal (props) {
                         <span>Notes </span>
                             <input type="text"/>
                         </div> */}
-                    </form>
-                    {/* <div className="toDoList">
+          </form>
+          {/* <div className="toDoList">
                         <span>To Do </span>
                         <ToDo />
                     </div> */}
-                    {/* <div>
+          {/* <div>
                         <span>Interviews </span>
                         
                     </div> */}
-                    {/* {notes.map(note => {
+          {/* {notes.map(note => {
                         return <div>{note}</div>
                     })} */}
-				</div>
-        <div className="close">
-          <button className="closeButton" onClick={() => setOpen(false)}>X</button>
         </div>
-
-			</div>
-		);
+      </div>
+    );
 	// }
 }
 

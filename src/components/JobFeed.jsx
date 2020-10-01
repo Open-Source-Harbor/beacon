@@ -98,8 +98,8 @@ class JobFeedElem extends Component {
             </span>
             <br />
             <span id="jobFeedCompany">{job.company.display_name}</span>
-            <span
-              className="buttonContainer"
+            <div
+              className="jobFeedContainer"
               onClick={(e) => {
                 this.handleClick(job);
               }}
@@ -121,7 +121,7 @@ class JobFeedElem extends Component {
                   d="M4 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5A.5.5 0 0 0 4 8z"
                 />
               </svg>
-            </span>
+            </div>
           </button>
           <br />
         </div>
@@ -136,7 +136,7 @@ class JobFeedElem extends Component {
                     <h3>Location</h3>
                 </div> */}
         <h2>Your Job Feed</h2>
-        <div className="jobLIst">{jobs}</div>
+        <div className="jobList">{jobs}</div>
       </div>
     );
   }
