@@ -27,6 +27,7 @@ $boxshadow2: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 $boxshadow3: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
 $boxshadow4: 0 6px 6px 0 rgba(153, 153, 153, 0.14), 0 6px 6px -2px rgba(153, 153, 153, 0.2), 0 6px 8px 0 rgba(153, 153, 153, 0.12);
 $boxshadow5: 2px 2px 1px 1px rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+$boxshadow6: 500px 100px 100px 5000px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 
 // Fonts
@@ -82,7 +83,7 @@ $borderradius2: 12px;
 
 .headerButton {
   background: transparent;
-  padding: 9px 18px;
+  padding: 20px 38px;
   font-size: 24px;
   color: $white;
   border-radius: $borderradius1;
@@ -115,7 +116,6 @@ $borderradius2: 12px;
 
 #createJob {
   color: $gblue;
-  font-weight: 400;
 }
 
 #loginButton {
@@ -148,11 +148,38 @@ $borderradius2: 12px;
     color: $ggreen;
   }
 }
+#modalNotes {
+  font-size: 24px;
+  margin: 5px;
+}
+#textareaNote {
+  width: 97%;
+  margin: 5px;
+  height: 40vh;
+  outline: none;
+  border: 0.5px solid $grey;
+  font-family: 'Roboto';
+}
+
+#inputNote {
+  margin: 20px 5px;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  background-color: $gblue;
+  color: $white;
+  border-radius: 8px;
+  padding: 8px 14px;
+  &:hover {
+    cursor: pointer;
+  }
+}
 
 .inputBoxes {
   margin-left: 20px;
   text-align: left;
 }
+
 
 .createModal {
   font-size: 1.5rem;
@@ -232,31 +259,33 @@ $borderradius2: 12px;
 .bi-arrow-right-square {
   font-size: 30px;
   box-shadow: $boxshadow5;
-  margin-top: -30px;
-  margin-left: 170px;
+  margin-top: -20px;
+  margin-left: 210px;
   border-radius: 3px;
-  background-color: $ggreen;
+  background-color: $gblue;
   color: white;
   &:hover {
     box-shadow: $boxshadow2;
     cursor: pointer;
-    
-    color: $ggreen;
+    color: $gblue;
     background-color: $white;
   }
 }
 
 .modal {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: space-between;
   position: absolute;
+  box-shadow: $boxshadow6;
   top: 5%;
   left: 10%;
   width: 80vw;
-  height: 75vh;
+  height: 85vh;
   background-color: $white;
   border-radius: 20px;
   .modalHeader {
+    display: flex;
     text-align: left;
     margin-left: 20px;
     margin-top: 20px;
@@ -313,6 +342,7 @@ $borderradius2: 12px;
         flex-direction: column;
 
         .jobContainer {
+          width: 275px;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
@@ -392,6 +422,13 @@ $borderradius2: 12px;
   }
 }
 
+.jobList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .jobContainer {
   display: flex;
   flex-direction: column;
@@ -409,7 +446,29 @@ $borderradius2: 12px;
   align-items: center;
 }
 
+.jobFeedContainer {
+  align-self: center;
+  text-align: right;
+  display: flex;
+  // flex-direction: row;
+  justify-items: right;
+  justify-content: right;
+  justify-self: self-end;
+  align-items: center;
+}
 
+.modalButtonContainer {
+  height: 100%;
+  width: 100%;
+  align-self: center;
+  text-align: left;
+  // display: flex;
+  // flex-direction: row;
+  justify-items: right;
+  justify-content: right;
+  justify-self: self-end;
+  align-items: center;
+}
 
 .footer {
   background-image: url('./assets/grass-wide.png');
@@ -473,6 +532,23 @@ $borderradius2: 12px;
   }
 }
 
+.closeButton {
+  margin-left: 58vw;
+  margin-top: -20px;
+  // margin-left: -65px;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  background-color: $lightgrey;
+  color: $white;
+  border-radius: 8px;
+  padding: 8px 14px;
+  &:hover {
+    cursor: pointer;
+    background-color: $gred;
+
+  }
+}
 
 /* .App-link {
   color: #61dafb;
