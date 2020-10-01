@@ -29,7 +29,7 @@ function MainPage(props) {
             <ArchiveBoard />
         </div>         */}
             <div className="showModal">
-              <Modal />
+              {/* <Modal /> */}
             </div>
           </div>
         ); 
