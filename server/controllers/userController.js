@@ -65,11 +65,14 @@ userController.createDummyUser = async (req, res, next) => {
 
 userController.getDummyUser = async (req, res, next) => {
   try {
+    console.log('IN getDummyUser', )
     const { userId } = req.body;
+    console.log('userId', userId)
 
     const user = await User.findOne({ _id: userId });
 
     res.locals.user = user;
+    console.log('res.locals,user', user);
 
     return next();
 

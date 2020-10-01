@@ -26,7 +26,7 @@ const jobController = {};
 // }
 jobController.getJobs = async (req, res, next) => {
   try {
-
+console.log('IN getJobs', )
     const user = res.locals.user;
     const board1 = user.boards[0];
     const archivedIDs = user.archived;
