@@ -11,16 +11,16 @@ const initialState = {
 
 const jobsReducer = (state = initialState, action) => {
 	
-	switch (action.type) {
-		case types.SOME_ACTION: //use an actual action from file
-			// set constants that will hold the changed state
+	// switch (action.type) {
+	// 	case types.SOME_ACTION: //use an actual action from file
+	// 		// set constants that will hold the changed state
 			
-			// copy the state and update the copy
+	// 		// copy the state and update the copy
 			
-			// return updated state
-			return {
-				// key value pairs
-			};
+	// 		// return updated state
+	// 		return {
+	// 			// key value pairs
+	// 		};
 
 		//EXAMPLES
 		// case types.SET_NEW_LOCATION:
