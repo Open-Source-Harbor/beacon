@@ -1,8 +1,9 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import JobColumn from './JobColumn';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
+// MOCK DATA - need to replace references to this data with real/fetched data
 const itemsFromBackend = [
   { id: uuidv4(), name: 'First Job' },
   { id: uuidv4(), name: 'Second Job' },
@@ -30,12 +31,14 @@ const columnsFromBackend = {
   },
 };
 
+// function to update columns after dragging job post
 const onDragEnd = (result, columns, setColumns) => {
   if (!result.destination) return;
   const { source, destination } = result;
   console.log('source', source);
   console.log('destination', destination);
 
+  // post is moved to a different column/category
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = columns[source.droppableId];
     const destColumn = columns[destination.droppableId];
@@ -54,6 +57,28 @@ const onDragEnd = (result, columns, setColumns) => {
         items: destItems,
       },
     });
+
+    // beginning skeleton for posting changes to server after drag event. NEEDS WORK
+    async function fetchData() {
+      const moved = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: '5f752731337865bfc01369fa',
+          // jobId: ,
+          // prevCol: ,
+          // prevIndex: ,
+          // newCol: ,
+          // newIndex: ,
+          // boardIndex: ,
+        }),
+      };
+      const res = await fetch('http://localhost:8080/moveJob', moved);
+      res
+        .json()
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
   } else {
     const column = columns[source.droppableId];
     const copiedItems = [...column.items];
@@ -72,9 +97,26 @@ const onDragEnd = (result, columns, setColumns) => {
 function JobBoard() {
   const [columns, setColumns] = useState(columnsFromBackend);
   console.log('columns in jobboard', columns);
-  // constructor(props) {
-  // 	super(props);
-  // }
+  const [jobs, setJobs] = useState({});
+
+  // fetch request to get all board info and jobs for logged in user - NEED TO REDO with new schema
+  async function fetchData() {
+    const userRequest = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: '5f74a8292a769931c7b7b0eb' }),
+    };
+    const res = await fetch('http://localhost:8080/getJobs', userRequest);
+    res
+      .json()
+      .then((res) => setJobs(res))
+      .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    fetchData();
+    console.log('jobs', jobs);
+  }, []);
 
   // render() {
   return (
@@ -157,6 +199,5 @@ function JobBoard() {
     </div>
   );
 }
-// }
 
 export default JobBoard;

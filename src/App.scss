@@ -19,6 +19,27 @@
   color: white;
 }
 
+.showModal {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(36, 29, 255, 0.353);
+  margin: 0;
+  padding: 0;
+  display: none;
+}
+
+.modal {
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  width: 80vw;
+  height: 75vh;
+  background-color: rgb(149, 149, 149);
+  border-radius: 20px;
+  display: none;
+}
+
 .mainContainer {
   background-color: #ebeef3;
   min-height: 80vh;
