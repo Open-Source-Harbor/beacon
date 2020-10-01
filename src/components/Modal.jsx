@@ -29,26 +29,27 @@ function Modal ({setOpen}) {
 				<div className="inputBoxes">
                     <form>
                         <div>
-                            <span>Job URL </span>
-                            <input type="url"/>
+                            <p>Notes </p>
+                            <textarea rows="10" cols="50" placeholder="Add your notes here..." />
+                            <input type="submit" value="Save" />
                         </div>
-                        <div>
+                        {/* <div>
                         <span>Salary </span>
                             <input type="text"/>
                         </div>
                         <div>
                         <span>Notes </span>
                             <input type="text"/>
-                        </div>
+                        </div> */}
                     </form>
-                    <div className="toDoList">
+                    {/* <div className="toDoList">
                         <span>To Do </span>
                         <ToDo />
-                    </div>
-                    <div>
+                    </div> */}
+                    {/* <div>
                         <span>Interviews </span>
                         
-                    </div>
+                    </div> */}
                     
 				</div>
         <div className="close">
