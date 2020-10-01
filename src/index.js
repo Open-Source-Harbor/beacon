@@ -4,6 +4,7 @@ import './index.css';
 import App from './containers/App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
+// import {} from 'dotenv/config';
 
 ReactDOM.render(
   <Router>

@@ -1,34 +1,20 @@
-const path = require('path');
 const express = require('express');
 const app = express();
-const cors = require('cors');
-const session = require('express-session');
 const cookieParser = require("cookie-parser");
-const bodyParser = require('body-parser');
-const userController = require("./controllers/userController.js");
-const loginController = require("./controllers/loginController.js");
-const cookieController = require("./controllers/cookieController.js");
-const jobController = require("./controllers/jobController.js");
-const { User } = require("./models/model");
-const passport = require('passport');
-const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
-const uuid = require("uuid");
+const bodyParser = require("body-parser");
+const logger = require("morgan");
 const PORT = 8080;
+const apiRouter = require("./routers/api");
 
-// LinkedIn 
-const clientSecret = "8pufmbYSk8WPXaog";
-const clientID = "860exmlhesujye";
-const Linkedin = require("node-linkedin")(clientID, clientSecret);
-// const callbackURL = "http://localhost:3000/auth/linkedin/callback"; 
-const callbackURL = "http://192.168.0.28:3000/auth/linkedin/callback"; 
-
-const state = uuid.v4().replace(/-/g, '').slice(0, 17);
+const cors = require('cors');
 
 app.use(cors());
+// app.use(express.static(path.resolve(__dirname, "public")));
+app.use(logger("dev"));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Creates a job for a specific user, and automatically puts in interestedIn column
 // INPUT => 
@@ -176,8 +162,15 @@ app.use("/", (req, res) =>
 //   return res.status(200).json(res.locals.job) // CHANGE
 // })
 
+// API ROUTER
+app.use('/api', apiRouter)
 
+// SERVES INDEX.HTML FILE ON ROUTE '/'
+// app.get("/", (req, res) =>
+//   res.status(200).sendFile(path.resolve(__dirname, "../public/index.html"))
+// );
 
+app.use((req, res) => res.sendStatus(404));
 
 app.use((err, req, res, next) => {
   const defaultErr = {
