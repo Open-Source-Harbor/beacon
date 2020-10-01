@@ -1,3 +1,4 @@
+const { models } = require("mongoose");
 const { User } = require("../models/model");
 const userController = {};
 
