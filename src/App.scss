@@ -125,6 +125,11 @@ $borderradius2: 12px;
   }
 }
 
+.modalTitle {
+  font-size: 30px;
+}
+
+
 .createModal {
   font-size: 1.5rem;
   position: absolute;
@@ -147,22 +152,56 @@ $borderradius2: 12px;
 }
 
 #clickable {
-  width: 100px;
-  height: 50px;
   color: $white;
   border: none;
   outline: none;
   background-color: transparent;
   font-size: 18px;
   font-weight: 400;
+  padding: 0;
+  &:hover {
+    color: $ggreen;
+    background-color: $white;
+  }
 }
 
-.bi-list-ul {
+#jobDelete {
+  margin-left: 10px;
+  color: $white;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 18px;
+  font-weight: 200;
+  padding: 0;
+  border-radius: 4px;
+  &:hover {
+    color: red;
+    background-color: $gblue;
+  }
+}
+
+.bi-trash {
+  padding: 5px;
   box-shadow: $boxshadow5;
   border-radius: 3px;
   &:hover {
     box-shadow: $boxshadow2;
     cursor: pointer;
+  }
+}
+
+.bi-list-ul {
+  padding: 5px;
+  box-shadow: $boxshadow5;
+  border-radius: 3px;
+  &:hover {
+    box-shadow: $boxshadow2;
+    cursor: pointer;
+    
+    color: $ggreen;
+    background-color: $white;
+  
   }
 }
 
@@ -377,11 +416,15 @@ $borderradius2: 12px;
 
 p.jobTitle {
   margin: 3px;
-  font-size: 17px;
+  font-size: 14px;
+  text-align: left;
+  margin-top: 20px;
   // display: inline-block;
 }
 
 p.jobCompany {
   font-size: 11px;
+  text-align: left;
+  margin-left: 4px;
   // display: inline-block;
 }

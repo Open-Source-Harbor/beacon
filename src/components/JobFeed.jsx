@@ -88,9 +88,11 @@ class JobFeedElem extends Component {
             }}
           >
             {job.title
-              .replace(/\<.*?>/gim, '')
-              .replace(/developer.*$/gim, 'Developer')
-              .replace(/engineer.*$/gim, 'Engineer')}
+              .replace(/\<.*?>/gim, "")
+              .replace(/developer.*$/gim, "Developer")
+              .replace(/engineer.*$/gim, "Engineer")}
+              <br /> @ 
+            {job.company.display_name}
           </button>
           <br />
         </div>

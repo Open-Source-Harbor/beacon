@@ -11,10 +11,8 @@ function Modal ({setOpen}) {
 		return (
 			<div className="modal">
                 <div className="modalHeader"> 
-                    <img alt="coming soon" /> 
-                         {/* { editMode ? ( */}
                             <div className="modalTitle">
-                                <h1>Job Title</h1>
+                                <h1 id="jobTitle">Job Title</h1>
                                 <h2>Company</h2>
                                 <h3>Location</h3>
                             </div>
