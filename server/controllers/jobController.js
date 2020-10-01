@@ -1,29 +1,6 @@
 const models = require("../models/model.js");
 const jobController = {};
 
-// jobController.getJobs = async (req, res, next) => {
-//   try {
-//     const response = await fetch("", {
-
-//     })
-//     const jobs = response.json();
-
-//     const jobArr = [];
-
-//     for (let i = 0; i < jobs.length - 1; i++) {
-//       jobArr.push(await models.Jobs.create(job[i]))
-//     }
-
-//     res.locals.jobs = jobArr;
-//     return next();
-
-//   } catch (err) {
-//     return next({
-//       log: `An error occurred while fetching jobs: ${err}`,
-//       message: { err: "An error occurred in jobController.getJobs. Check server for more details" },
-//     });
-//   }
-// }
 jobController.getJobs = async (req, res, next) => {
   try {
 console.log('IN getJobs', )
@@ -74,6 +51,7 @@ console.log('IN getJobs', )
   }
 }
 
+// literally fetches all jobs in the database...
 // jobController.getAllJobs = async (req, res, next) => {
 //   try {
 
@@ -91,13 +69,6 @@ console.log('IN getJobs', )
 //   }
 // }
 
-// createJob needs these inputs:
-// {
-//   newJob: {
-//     ...
-//   },
-//   userId: "userIdlongnumber..."
-// }
 
 jobController.createJob = async (req, res, next) => {
   console.log('createJob invoked')
@@ -122,10 +93,10 @@ jobController.createJob = async (req, res, next) => {
 
 jobController.moveJob = async (req, res, next) => {
   try {
-    const { userId, jobId, prevCol, prevIndex, newCol, newIndex, boardIndex } = req.body; // this might be really tricky...
+    const { userId, jobId, prevCol, prevIndex, newCol, newIndex, boardIndex = 0 } = req.body; // this might be really tricky...
     
-    if (prevCol !== 'interestedIn' && prevCol !== 'appliedFor' && prevCol !== 'upcomingInterview' && prevCol !== 'offers') return next();
-    if (newCol !== 'interestedIn' && newCol !== 'appliedFor' && newCol !== 'upcomingInterview' && newCol !== 'offers') return next();
+    // if (prevCol !== 'interestedIn' && prevCol !== 'appliedFor' && prevCol !== 'upcomingInterview' && prevCol !== 'offers') return next();
+    // if (newCol !== 'interestedIn' && newCol !== 'appliedFor' && newCol !== 'upcomingInterview' && newCol !== 'offers') return next();
 
     const job = await models.Job.findOneAndUpdate({ _id: jobId }, { column: newCol })
     const user = await models.User.findOne({ _id: userId });
@@ -134,11 +105,18 @@ jobController.moveJob = async (req, res, next) => {
     newBoards[prevCol].splice(prevIndex, 1);
     newBoards[newCol].splice(newIndex, 0, jobId);
 
-    const newUser = await models.User.findOne({ _id: userId }, { boards: newBoards });
+    const previousColumn = newBoards[prevCol];
+    const newColumn = newBoards[newCol];
 
-    res.locals.user = newUser;
-    res.locals.job = job;
-    return next();
+    const previousColumnField = `boards.0.${prevCol}`;
+    const newColumnField = `boards.0.${newCol}`;
+
+    await models.User.findOneAndUpdate({ _id: userId }, { [previousColumnField]: previousColumn, [newColumnField]: newColumn }, (err, newUser) => {
+      if (err) console.log(err);
+      res.locals.user = newUser;
+      res.locals.job = job;
+      return next();
+    });
 
   } catch (err) {
     return next({
@@ -148,20 +126,22 @@ jobController.moveJob = async (req, res, next) => {
   }
 }
 
-jobController.moveToArchived = async (req, res, next) => {
+jobController.archive = async (req, res, next) => {
   try {
-    if (res.locals.user) return next();
-    const { userId, jobId, prevCol, prevIndex, newCol, newIndex, boardIndex } = req.body;
+    const { userId, jobId, prevCol, prevIndex, boardIndex = 0 } = req.body;
 
-    if (newCol !== 'archived') {
-      return next({
-        log: 'Some inputs for moving a job are wrong!!',
-        message: { err: "Inputs for moving a job are wrong. In moveToArchived, the newCol is not archived." },
-      });
-    }
+    models.Job.findOneAndUpdate({ _id: jobId }, { column: 'archived' })
+    const user = await models.User.findOne({ _id: userId });
 
-    //// logic to move from column to archived...
+    const newBoards = user.boards[0];
+    newBoards[prevCol].splice(prevIndex, 1);
+    const previousColumn = newBoards[prevCol];
+    const previousColumnField = `boards.0.${prevCol}`;
 
+    await models.User.findOneAndUpdate({ _id: userId }, {$push: { 'archived': jobId }, [previousColumnField]: previousColumn }, (err, newUser) => {
+      res.locals.user = newUser;
+      return next();
+    });
 
   } catch (err) {
     return next({
