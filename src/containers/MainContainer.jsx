@@ -1,10 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+// import { useHistory } from 'react-router'
 
 import HomePage from '../components/HomePage.jsx'
 import MainPage from '../components/MainPage.jsx'
 import MainPageGreeting from '../components/MainPageGreeting.jsx';
 
+// const history = useHistory()
 
 function Main(props) {
   const [userID, setUserID] = React.useState('5f75e7b2d3a398548e7addf1');
