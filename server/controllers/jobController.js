@@ -118,7 +118,7 @@ jobController.createJob = async (req, res, next) => {
   // console.log('createJob invoked')
   try {
     const { newJob, userId} = req.body;
-
+    console.log('userId in CREATE JOB', userId)
     models.Job.create({...newJob}, async (err, result) => {
       res.locals.job = result;
       // console.log('job creation result', result)

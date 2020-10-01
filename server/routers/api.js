@@ -110,7 +110,4 @@ jobController.archive,
   return res.status(200).json();
   })
 
-  router.post('/addJob')
-
-
 module.exports = router;

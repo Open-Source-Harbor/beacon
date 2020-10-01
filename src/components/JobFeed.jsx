@@ -37,10 +37,35 @@ class JobFeedElem extends Component {
       .catch((err) => console.log(`error when fetching feed data: ${err}`));
   }
 
-  handleClick(job) {
+  async handleClick(job) {
     console.log('button clicked!', job.title);
 
-    fetch('http://localhost:8080/api/addJob');
+    const fields = {
+      title: job.title,
+      company: '',
+      location: '',
+      postURL: '',
+    };
+
+    async function addJob() {
+      const add = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          newJob: fields,
+          userId: '5f75e7b2d3a398548e7addf1',
+        }),
+      };
+
+      const res = await fetch('http://localhost:8080/api/createJob', add);
+      
+      res
+        .json()
+        .then((res) => console.log('added feed job post', res))
+        .catch((err) => console.log(err));
+    }
+
+    await addJob();
   }
 
   render() {
