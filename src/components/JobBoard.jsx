@@ -64,7 +64,7 @@ const onDragEnd = (result, columns, setColumns) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId: '5f752731337865bfc01369fa',
+          userId: '5f75e7b2d3a398548e7addf1',
           // jobId: ,
           // prevCol: ,
           // prevIndex: ,
@@ -104,7 +104,7 @@ function JobBoard() {
     const userRequest = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: '5f756ec40aed7d4e1da0e732' }),
+      body: JSON.stringify({ userId: '5f75e7b2d3a398548e7addf1' }),
     };
     const res = await fetch('/api/getJobs', userRequest);
     const parsed = await res.json();
@@ -118,18 +118,22 @@ function JobBoard() {
     setColumns({
       'f0ae9269-d425-43e8-91e5-177e6033c1f4': {
         ...columns['f0ae9269-d425-43e8-91e5-177e6033c1f4'],
+        name: "Interested",
         items: parsed.interestedIn,
       },
       'be643203-6f1b-40ca-92ab-ce6f867e6755': {
         ...columns['be643203-6f1b-40ca-92ab-ce6f867e6755'],
+        name: "Applied",
         items: parsed.appliedFor,
       },
       'ec38e4c5-dcf2-4cb7-b648-7f52d2f77966': {
         ...columns['ec38e4c5-dcf2-4cb7-b648-7f52d2f77966'],
+        name: "Interviews",
         items: parsed.upcomingInterviews,
       },
       '3da033ba-7d52-46bf-9225-f702731d5939': {
         ...columns['3da033ba-7d52-46bf-9225-f702731d5939'],
+        name: "Offers",
         items: parsed.offers
       }
     })

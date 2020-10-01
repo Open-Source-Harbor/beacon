@@ -40,6 +40,7 @@ userController.createUser = async (req, res, next) => {
   try {
     if (!res.locals.user || !res.locals.user.l_id) return next();
     const query = { 'l_id': res.locals.user.l_id }
+    res.locals.user.boards[0] = { name: "Board1" };
     await User.findOneAndUpdate(query, res.locals.user, {upsert: true}, (err, doc) => {
       if (err) return res.send(500, {error: `error occured in userController.createUser: ${err}`});
       return next();
@@ -90,6 +91,7 @@ userController.createDummyUser = async (req, res, next) => {
     const dummy = req.body;
     // console.log('req.body', dummy)
 
+    dummy.boards = [{ name: "Board1" }];
     await User.create(dummy, (err, dumUser) => {
       // console.log('dummy ', dumUser);
       res.locals.user = dumUser;
