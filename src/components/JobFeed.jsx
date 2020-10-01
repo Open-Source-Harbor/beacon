@@ -41,7 +41,10 @@ class JobFeedElem extends Component {
     console.log('button clicked!', job.title);
 
     const fields = {
-      title: job.title,
+      title: job.title
+        .replace(/\<.*?>/gim, '')
+        .replace(/developer.*$/gim, 'Developer')
+        .replace(/engineer.*$/gim, 'Engineer'),
       company: '',
       location: '',
       postURL: '',
@@ -58,7 +61,7 @@ class JobFeedElem extends Component {
       };
 
       const res = await fetch('http://localhost:8080/api/createJob', add);
-      
+
       res
         .json()
         .then((res) => console.log('added feed job post', res))
