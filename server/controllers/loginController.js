@@ -118,13 +118,15 @@ loginController.getUserNamePhoto = async (req, res, next) => {
           // console.log("=====> name & photo fetch response 1: ", response);
           // console.log("=====> name & photo fetch response 2: ", response.profilePicture['displayImage~'].paging);
           // console.log("=====> name & photo fetch response 3: ", response.profilePicture["displayImage~"].elements[0]);
+          // console.log("=====> name & photo fetch response 3: ", response.profilePicture["displayImage~"].elements[0].identifiers);
           // console.log("=====> name & photo fetch response 4: ", response.profilePicture["displayImage~"].elements[0].data);
           // console.log("=====> name & photo fetch response 5: ", response.profilePicture["displayImage~"].elements[0].data['com.linkedin.digitalmedia.mediaartifact.StillImage']);
           res.locals.user = {};
           if (response.id) res.locals.user.l_id = response.id;
           if (response.firstName) res.locals.user.firstName = response.firstName.localized.en_US;
           if (response.lastName) res.locals.user.lastName = response.lastName.localized.en_US;
-          if (response.profilePicture) res.locals.user.photo = response.profilePicture.displayImage;
+          if (response.profilePicture) res.locals.user.photo =
+            response.profilePicture["displayImage~"].elements[0].identifiers[0].identifier;
           res.locals.user.token = res.locals.token;
           // console.log("res.locals.user after first FETCH: ", res.locals.user);
         };

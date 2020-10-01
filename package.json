@@ -33,8 +33,10 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "simple-oauth2": "^4.1.0",
+    "socket.io-client": "^2.3.1",
     "superagent": "^6.1.0",
-    "uuid": "^8.3.0"
+    "uuid": "^8.3.0",
+    "ws": "^7.3.1"
   },
   "scripts": {
     "start": "react-scripts start",

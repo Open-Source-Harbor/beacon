@@ -65,6 +65,12 @@ $borderradius2: 12px;
     position: absolute;
     top: 40px;
     left: 40px;
+
+    &:hover{
+      webkit-filter: blur(4px); 
+      filter: blur(2px);
+      cursor: pointer;
+    }
   }
 }
 
@@ -151,9 +157,14 @@ $borderradius2: 12px;
 }
 
 .mainPageGreeting {
+  display: flex;
   span {
     font-size: 14px;
   }
+  #profilePhoto {
+    border-radius: 50%;
+  }
+
 }
 .mainPage {
   // background-color: white;
@@ -238,7 +249,8 @@ $borderradius2: 12px;
   min-height: 10vh;
   height: 180px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-self: center;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
@@ -249,6 +261,70 @@ $borderradius2: 12px;
     font-size: 18px;
   }
 }
+
+.chatroom-container {
+  background-color: $lightergrey;
+  border-radius: $borderradius2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  h1 {
+    font-size: 26px;
+  }
+}
+
+.chatButton {
+  text-align: center;
+  position: fixed;
+  bottom: 130px;
+  right: 30px;
+  zoom: 1.5;
+}
+
+.chatPopup {
+  border-radius: 3px;
+  outline: none;
+  border: none;
+  color: $white;
+  padding: 5px 10px;
+  background-color: $ggreen;
+  outline: none;
+  &:hover {
+    box-shadow: $boxshadow3;
+    cursor: pointer;
+  }
+}
+
+.modal {
+  z-index: 100;
+  bottom: 2000px;
+  right: 300px;
+  width: 400px;
+  height: 400px;
+  background-color: red
+}
+
+.modal_content {
+  background-color: yellow;
+  position: absolute;
+  bottom: 2000px;
+  right: 300px;
+  width: 200px;
+  padding: 20px;
+  border-radius: 5px;
+  border: 2px solid black;
+}
+
+.close {
+  color: Black;
+  float: right;
+  &:hover{
+    color: $gblue;
+    cursor: pointer;
+  }
+}
+
 
 /* .App-link {
   color: #61dafb;

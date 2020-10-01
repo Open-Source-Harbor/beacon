@@ -20,15 +20,15 @@ jobController.getFeed = async (req, res, next) => {
     const contentType = "application/json";
     const fullURI = `${baseURI}app_id=${appID}&app_key=${appKey}&results_per_page=${resultsPerPage}&what=${keyword0}%20${keyword1}&what_exclude=${exclude0}&where=${location}&sort_by=${sortBy}&salary_min=${salaryMin}&full_time=${fullTime}&permanent=${permanent}&content-type=${contentType}`;
     
-    console.log('jobController.getFeed fullURI: ', fullURI);
+    // console.log('jobController.getFeed fullURI: ', fullURI);
     
     await fetch(fullURI)
       .then(res => res.json())
       .then(data => {
-        console.log('jobController.getFeed data: ', data)
-        console.log("jobController.getFeed data.results: ", data.results);
+        // console.log('jobController.getFeed data: ', data)
+        // console.log("jobController.getFeed data.results: ", data.results);
         res.locals.feed = data.results;
-        console.log("jobController.getFeed res.locals.feed: ", res.locals.feed);
+        // console.log("jobController.getFeed res.locals.feed: ", res.locals.feed);
       })
       .catch(err => console.log(`error occurred during GET request in getFeed: ${err}`))
 
