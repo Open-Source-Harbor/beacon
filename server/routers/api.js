@@ -5,8 +5,6 @@ const cookieController = require("../controllers/cookieController");
 const userController = require("../controllers/userController");
 require("dotenv").config();
 
-const redirect_uri = "http://localhost:3000";
-
 router.use(
   "/linkedin**",
   loginController.requestToken,
@@ -15,8 +13,12 @@ router.use(
   cookieController.setCookie,
   userController.createUser,
   (req, res) => {
-    return res.redirect(redirect_uri);
+    return res.redirect("http://localhost:3000/main");
   }
 );
+
+router.use("/logout", (req, res) => {
+  return res.redirect("http://localhost:3000");
+});
 
 module.exports = router;
