@@ -2,6 +2,7 @@
 
 # CLIENT_ID
 src/components/Secrets.js
+server/temp.json
 
 # project
 .idea/

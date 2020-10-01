@@ -6,8 +6,32 @@ const userController = require("../controllers/userController");
 const jobController = require("../controllers/jobController");
 require("dotenv").config();
 
+// router.use(
+//   "/auth",
+//   loginController.isLoggedIn,
+//   loginController.oAuth,
+//   (req, res) => {
+//     // return res.send(200).json(res.locals.user);
+//     return res.redirect("http://localhost:3000/main");
+//   }
+// );
+
+// router.use(
+//   "/new",
+//   loginController.requestToken,
+//   loginController.getUserNamePhoto,
+//   loginController.getUserEmail,
+//   cookieController.setCookie,
+//   userController.createUser,
+//   (req, res) => {
+//     // return res.send(200).json(res.locals.user);
+//     return res.redirect("http://localhost:3000/main");
+//   }
+// );
+
 router.use(
-  "/linkedin**",
+  "/login",
+  loginController.isLoggedIn,
   loginController.requestToken,
   loginController.getUserNamePhoto,
   loginController.getUserEmail,
@@ -18,8 +42,19 @@ router.use(
   }
 );
 
-router.use("/logout", (req, res) => {
-  return res.redirect("http://localhost:3000");
+router.use("/user", userController.getUser,(req, res) => {
+    return res.status(200).json(res.locals.user);
+    // return res.redirect("http://localhost:3000/main");
+  }
+);
+
+router.use("/feed", jobController.getFeed, (req, res) => {
+  return res.status(200).json(res.locals.feed);
+  // return res.redirect("http://localhost:3000/main");
+});
+
+router.use("/logout", cookieController.deleteCookie, (req, res) => {
+  return res.redirect("http://localhost:3000/");
 });
 
 // Creates a job for a specific user, and automatically puts in interestedIn column
@@ -74,5 +109,6 @@ jobController.archive,
 (req, res) => {
   return res.status(200).json();
 })
+
 
 module.exports = router;
