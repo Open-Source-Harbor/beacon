@@ -5,19 +5,12 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 
 // MOCK DATA - need to replace references to this data with real/fetched data
-const itemsFromBackend = [
-  { id: uuidv4(), name: 'First Job' },
-  { id: uuidv4(), name: 'Second Job' },
-  { id: uuidv4(), name: 'Third Job' },
-  { id: uuidv4(), name: 'Fourth Job' },
-  { id: uuidv4(), name: 'Fifth Job' },
-];
 
 const columnsFromBackend = {
   [uuidv4()]: {
     name: 'Interested',
     dbName: 'interestedIn',
-    items: itemsFromBackend,
+    items: [],
   },
   [uuidv4()]: {
     name: 'Applied',
@@ -129,13 +122,38 @@ const onDragEnd = async (result, columns, setColumns) => {
   }
 };
 
+const handleDelete = (e, job, idx, column) => {
+  const jobId = job._id;
+  console.log('column db', column)
+  console.log('jobId', jobId);
+  console.log('e parent', e.target.parentNode);
+  console.log('index', idx)
+  fetch(`/api/${jobId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      userId: '5f75e7b2d3a398548e7addf1',
+      column: column,
+      index: idx
+    }),
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      if (response.status === 200) {
+        let post = document.getElementById(`${jobId}`);
+        post.remove();
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
 function JobBoard(props) {
   const { userId } = props;
   const [columns, setColumns] = useState(columnsFromBackend);
-  console.log("columns in jobboard", columns);
+  console.log('columns in jobBoard', columns);
   const [jobs, setJobs] = useState({});
   const [open, setOpen] = useState(false);
-  const [display, setDisplay] = useState('none')
+  const [display, setDisplay] = useState('none');
 
   // fetch request to get all board info and jobs for logged in user - NEED TO REDO with new schema
   async function fetchData() {
@@ -145,10 +163,9 @@ function JobBoard(props) {
     const userRequest = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId }),
-      // body: JSON.stringify({ userId: "5f75e7b2d3a398548e7addf1" }),
+      body: JSON.stringify({ userId: '5f75e7b2d3a398548e7addf1' }),
     };
-    const res = await fetch("/api/getJobs", userRequest);
+    const res = await fetch('/api/getJobs', userRequest);
     const parsed = await res.json();
 
     await setJobs(parsed);
@@ -161,37 +178,37 @@ function JobBoard(props) {
 
   async function renderJobs(parsed) {
     setColumns({
-      "f0ae9269-d425-43e8-91e5-177e6033c1f4": {
-        ...columns["f0ae9269-d425-43e8-91e5-177e6033c1f4"],
-        name: "Interested",
+      'f0ae9269-d425-43e8-91e5-177e6033c1f4': {
+        ...columns['f0ae9269-d425-43e8-91e5-177e6033c1f4'],
+        name: 'Interested',
         dbName: 'interestedIn',
         items: parsed.interestedIn,
       },
-      "be643203-6f1b-40ca-92ab-ce6f867e6755": {
-        ...columns["be643203-6f1b-40ca-92ab-ce6f867e6755"],
-        name: "Applied",
+      'be643203-6f1b-40ca-92ab-ce6f867e6755': {
+        ...columns['be643203-6f1b-40ca-92ab-ce6f867e6755'],
+        name: 'Applied',
         dbName: 'appliedFor',
         items: parsed.appliedFor,
       },
-      "ec38e4c5-dcf2-4cb7-b648-7f52d2f77966": {
-        ...columns["ec38e4c5-dcf2-4cb7-b648-7f52d2f77966"],
-        name: "Interviews",
+      'ec38e4c5-dcf2-4cb7-b648-7f52d2f77966': {
+        ...columns['ec38e4c5-dcf2-4cb7-b648-7f52d2f77966'],
+        name: 'Interviews',
         dbName: 'upcomingInterviews',
         items: parsed.upcomingInterviews,
       },
-      "3da033ba-7d52-46bf-9225-f702731d5939": {
-        ...columns["3da033ba-7d52-46bf-9225-f702731d5939"],
-        name: "Offers",
+      '3da033ba-7d52-46bf-9225-f702731d5939': {
+        ...columns['3da033ba-7d52-46bf-9225-f702731d5939'],
+        name: 'Offers',
         dbName: 'offers',
-        items: parsed.offers
-      }
-    })
+        items: parsed.offers,
+      },
+    });
   }
 
   useEffect(async () => {
     console.log('we need USSER ID', userId)
     await fetchData();
-    console.log("jobs", jobs);
+    console.log('jobs', jobs);
   }, []);
 
   return (
@@ -205,9 +222,9 @@ function JobBoard(props) {
             return (
               <div
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
                 }}
                 key={columnId}
               >
@@ -221,12 +238,12 @@ function JobBoard(props) {
                           ref={provided.innerRef}
                           style={{
                             background: snapshot.isDraggingOver
-                              ? "#kkkkkk"
-                              : "white",
+                              ? '#kkkkkk'
+                              : 'white',
                             padding: 4,
                             width: 250,
                             minHeight: 500,
-                            borderRadius: "12px",
+                            borderRadius: '12px',
                           }}
                         >
                           {column.items.map((item, index) => {
@@ -236,15 +253,6 @@ function JobBoard(props) {
                                 key={item._id}
                                 draggableId={item._id}
                                 index={index}
-                                onClick={
-                                  (e) => console.log(e.target.id)
-                                  // (event, item, index) => {
-                                  // const clicker = document.getElementById(event.target.id);
-                                  // clicker.addEventListener('click', e => {
-                                  //   setOpen(true)
-                                  // })
-                                  // }
-                                }
                               >
                                 {(provided, snapshot) => {
                                   return (
@@ -261,14 +269,18 @@ function JobBoard(props) {
                                         justifyContent: "start",
                                         alignItems: "center",
                                         backgroundColor: snapshot.isDragging
-                                          ? "#888888"
-                                          : "#3367F9",
-                                        color: "white",
+                                          ? '#888888'
+                                          : '#3367F9',
+                                        color: 'white',
                                         ...provided.draggableProps.style,
-                                        borderRadius: "8px",
+                                        borderRadius: '8px',
                                       }}
                                     >
-                                      
+                                      <button
+                                        onClick={(e) => handleDelete(e, item, index, column.dbName)}
+                                      >
+                                        X
+                                      </button>
                                       <span>
                                         <button
                                           id="clickable"
