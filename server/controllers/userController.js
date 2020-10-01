@@ -69,12 +69,14 @@ userController.getDummyUser = async (req, res, next) => {
     const { userId } = req.body;
     console.log('userId', userId)
 
-    const user = await User.findOne({ _id: userId });
+    const user = await User.findOne({ _id: userId }, (err, user) => {
+      res.locals.user = user;
+      console.log('res.locals,user', user);
+  
+      return next();
+    });
 
-    res.locals.user = user;
-    console.log('res.locals,user', user);
-
-    return next();
+    
 
   } catch (err) {
     return next({
