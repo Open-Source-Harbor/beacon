@@ -254,9 +254,12 @@ function JobBoard(props) {
                                       {...provided.dragHandleProps}
                                       style={{
                                         userSelect: "none",
-                                        padding: 16,
+                                        padding: 4,
                                         margin: "7px",
                                         minHeight: "50px",
+                                        display: "flex",
+                                        justifyContent: "start",
+                                        alignItems: "center",
                                         backgroundColor: snapshot.isDragging
                                           ? "#888888"
                                           : "#3367F9",
@@ -269,15 +272,26 @@ function JobBoard(props) {
                                       <span>
                                         <button
                                           id="clickable"
+                                          style={{
+                                            backgroundColor: 'darkblue',
+                                            width: '50px',
+                                            height: '50px',
+                                            borderRadius: '10px',
+                                            marginLeft: '1%'
+                                          }}
                                           onClick={(e) => {
                                             // window.alert(e.target.id)
                                             setOpen(true);
                                           }}
                                         >
-                                          <p className="jobTitle">{item.title}</p>
-                                          <p className="jobCompany">{item.company}</p>
+                                          
+                                          
                                         </button>
                                       </span>
+                                      <div className="jobInfoDisplay">
+                                        <p className="jobTitle">{item.title}</p>
+                                        <p className="jobCompany">{item.company}</p>
+                                      </div>
                                     </div>
                                   );
                                 }}
