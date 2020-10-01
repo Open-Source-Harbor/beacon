@@ -8,14 +8,14 @@ import MainPageGreeting from '../components/MainPageGreeting.jsx';
 
 const history = useHistory()
 
-function Main() {
+function Main(props) {
   return (
     <div className="mainContainer">
       <Switch>
         <Route exact path="/main">
             {history.go(0)}
             <MainPageGreeting />
-            <MainPage />
+            <MainPage newJobAdded={props.newJobAdded}/>
         </Route>
         <Route exact path="/">
             <HomePage />
