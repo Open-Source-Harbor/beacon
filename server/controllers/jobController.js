@@ -147,6 +147,10 @@ jobController.moveJob = async (req, res, next) => {
     const job = await models.Job.findOneAndUpdate({ _id: jobId }, { column: newCol })
     const user = await models.User.findOne({ _id: userId });
 
+    console.log('user', user);
+    console.log('user.boards', user.boards)
+    console.log('prevCol', prevCol, newCol);
+
     const newBoards = user.boards[0];
     newBoards[prevCol].splice(prevIndex, 1);
     newBoards[newCol].splice(newIndex, 0, jobId);
